@@ -55,7 +55,7 @@ class ApplicationsService extends BaseApplicationComponent
 			try
 			{
 				// Fire an 'onBeforeSaveApplication' event
-				$this->onBeforeSaveApplication(new Application($this, array(
+				$this->onBeforeSaveApplication(new Event($this, array(
 					'application'      => $application,
 					'isNewApplication' => $isNewApplication
 				)));
@@ -71,7 +71,7 @@ class ApplicationsService extends BaseApplicationComponent
 					$applicationRecord->save(false);
 
 					// Fire an 'onSaveEvent' event
-					$this->onSaveApplication(new Application($this, array(
+					$this->onSaveApplication(new Event($this, array(
 						'application'      => $application,
 						'isNewApplication' => $isNewApplication
 					)));
