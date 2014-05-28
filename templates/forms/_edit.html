@@ -1,0 +1,59 @@
+{% extends "_layouts/cp" %}
+
+{% import "_includes/forms" as forms %}
+
+{% block content %}
+
+	<form method="post" accept-charset="UTF-8" data-saveshortcut="1">
+
+		<input type="hidden" name="action" value="applications/forms/saveForm">
+		<input type="hidden" name="redirect" value="applications/forms">
+		{% if form.id %}<input type="hidden" name="formId" value="{{ form.id }}">{% endif %}
+
+		{{ forms.textField({
+			first: true,
+			label: "Name"|t,
+			instructions: "What this form will be called in the CP."|t,
+			id: 'name',
+			name: 'name',
+			value: form.name,
+			errors: form.getErrors('name'),
+			autofocus: true,
+			required: true,
+			translatable: true
+		}) }}
+
+		{{ forms.textField({
+			label: "Handle"|t,
+			instructions: "How you’ll refer to this form in the templates."|t,
+			id: 'handle',
+			class: 'code',
+			name: 'handle',
+			value: form.handle,
+			errors: form.getErrors('handle'),
+			required: true
+		}) }}
+
+		<hr>
+
+		{% include "_includes/fieldlayoutdesigner" with {
+			fieldLayout: form.getFieldLayout()
+		} only %}
+
+		<hr>
+
+		<div class="buttons">
+
+			<input type="submit" class="btn submit" value="{{ 'Save'|t }}">
+
+		</div>
+
+	</form>
+
+{% endblock %}
+
+
+{% set js %}
+	{% if not form.handle %}new Craft.HandleGenerator('#name', '#handle');{% endif %}
+{% endset %}
+{% includeJs js %}

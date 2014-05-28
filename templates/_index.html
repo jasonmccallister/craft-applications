@@ -1,0 +1,47 @@
+{% extends "_layouts/elementindex" %}
+{% set title = "Applications"|t %}
+{% set elementType = 'Applications_Application' %}
+
+{% set tabs = {
+    applications: { label: "Applications"|t, url: url('applications') },
+    forms: 	   { label: "Forms"|t, url: url('applications/forms') }
+} %}
+
+
+{% block sidebar %}
+
+    {% if forms|length %}
+
+        <div class="buttons">
+
+	    {% if forms|length > 1 %}
+
+	        <div class="btn submit menubtn add icon">{{ "New Application"|t }}</div>
+            <div class="menu">
+
+	            <ul>
+
+	            {% for form in forms %}
+
+	                <li><a href="{{ url('applications/'~form.handle~'/new') }}">{{ form.name|t }}</a></li>
+
+	            {% endfor %}
+
+                </ul>
+            </div>
+
+        {% else %}
+
+			<a class="btn submit add icon" href="{{ url('applications/'~forms[0].handle~'/new') }}">{{ "New Application"|t }}</a>
+
+		{% endif %}
+
+		</div>
+
+	{% endif %}
+
+
+    {{ parent() }}
+
+
+{% endblock %}

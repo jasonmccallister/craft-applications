@@ -1,0 +1,31 @@
+{% macro dateTimeField(element, attribute, label) %}
+
+    {% import "_includes/forms" as forms %}
+
+    {% set input %}
+        {{ forms.date({
+            id:        attribute,
+            name:      attribute,
+            value:     element.getAttribute(attribute),
+            errors:    element.getErrors(attribute),
+            autofocus: (attribute == 'submitDate'),
+        }) }}
+
+        {{ forms.time({
+            id:        attribute,
+            name:      attribute,
+            value:     element.getAttribute(attribute),
+            errors:    element.getErrors(attribute),
+        }) }}
+    {% endset %}
+
+    {{ forms.field({
+        id:       attribute,
+        label:    label,
+        first:    (attribute == 'submitDate'),
+        required: true
+    }, input) }}
+
+{% endmacro %}
+
+{{ dateTimeField(element, 'startDate', "Start Date"|t, true) }}
