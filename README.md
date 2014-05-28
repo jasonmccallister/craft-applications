@@ -27,8 +27,6 @@ I highly encourage you to contribute to this plugin but please try to adhere to 
 
 [developer]:http://themccallister.com
 [twitter]:https://twitter.com/themccallister "@themccallister"
-[release]:https://github.com/selvinortiz/craft.spamguard/releases/download/v0.5.5/spamguard.v0.5.5.zip "Official Release"
-[license]:https://raw.github.com/selvinortiz/craft.spamguard/master/LICENSE "MIT License"
-[changelog]:https://github.com/selvinortiz/craft.spamguard/blob/master/CHANGELOG.md "Changelog"
+[release]:https://github.com/themccallister/craft.applications/archive/master.zip "Official Release"
 [craftcms]:http://buildwithcraft.com "Craft CMS"
 [pixelandtonic]:http://pixelandtonic.com "Pixel & Tonic"
