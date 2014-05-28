@@ -13,7 +13,7 @@ class ApplicationsPlugin extends BasePlugin
 
     public function getVersion()
     {
-        return '0.2';
+        return '0.9';
     }
 
     public function getDeveloper()
