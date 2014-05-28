@@ -56,7 +56,9 @@ class Applications_ApplicationElementType extends BaseElementType
 
             $sources[$key] = array(
                 'label'    => $form->name,
-                'criteria' => array('formId' => $form->id)
+                'criteria' => array(
+                    'formId' => $form->id
+                )
             );
         }
 
@@ -72,7 +74,7 @@ class Applications_ApplicationElementType extends BaseElementType
     public function defineTableAttributes($source = null)
     {
         return array(
-            'title'     => Craft::t('Title'),
+            'title'      => Craft::t('Title'),
             'submitDate' => Craft::t('Submit Date'),
         );
     }
@@ -117,10 +119,12 @@ class Applications_ApplicationElementType extends BaseElementType
     public function defineCriteriaAttributes()
     {
         return array(
-            'form'   => AttributeType::Mixed,
-            'formId' => AttributeType::Mixed,
+            'form'        => AttributeType::Mixed,
+            'formId'      => AttributeType::Mixed,
             'submitDate'  => AttributeType::Mixed,
-            'order'      => array(AttributeType::String, 'default' => 'applications.submitDate asc'),
+            'order'       => array(
+                AttributeType::String, 'default' => 'applications.submitDate asc'
+            ),
         );
     }
 

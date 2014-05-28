@@ -107,6 +107,8 @@ class Applications_FormsController extends BaseController
         $formId = craft()->request->getRequiredPost('id');
 
         craft()->applications_forms->deleteFormById($formId);
-        $this->returnJson(array('success' => true));
+        $this->returnJson(array(
+            'success' => true
+        ));
     }
 }
