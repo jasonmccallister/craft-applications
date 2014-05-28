@@ -14,10 +14,12 @@ class Applications_ApplicationModel extends BaseElementModel
      */
     protected function defineAttributes()
     {
-        return array_merge(parent::defineAttributes(), array(
-            'formId' => AttributeType::Number,
-            'submitDate'  => AttributeType::DateTime,
-        ));
+        return array_merge(
+            parent::defineAttributes(), array(
+                'formId' => AttributeType::Number,
+                'submitDate'  => AttributeType::DateTime,
+            )
+        );
     }
 
     /**

@@ -95,8 +95,14 @@ class ApplicationsController extends BaseController
 
         // Breadcrumbs
         $variables['crumbs'] = array(
-            array('label' => Craft::t('Applications'), 'url' => UrlHelper::getUrl('applications')),
-            array('label' => $variables['form']->name, 'url' => UrlHelper::getUrl('applications'))
+            array(
+                'label' => Craft::t('Applications'),
+                'url' => UrlHelper::getUrl('applications'
+            )),
+            array(
+                'label' => $variables['form']->name,
+                'url' => UrlHelper::getUrl('applications'
+            ))
         );
 
         // Set the "Continue Editing" URL

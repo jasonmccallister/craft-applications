@@ -56,7 +56,9 @@ class Applications_FormsService extends BaseApplicationComponent
         }
         else if (!$indexBy)
         {
-            return array_values($this->_formsById);
+            return array_values(
+                $this->_formsById
+            );
         }
         else
         {
@@ -78,7 +80,9 @@ class Applications_FormsService extends BaseApplicationComponent
      */
     public function getTotalForms()
     {
-        return count($this->getAllFormIds());
+        return count(
+            $this->getAllFormIds()
+        );
     }
 
     /**
