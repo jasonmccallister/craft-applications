@@ -2,6 +2,11 @@
 
 This plugin was developed by [Jason McCallister][developer] for [Craft][craftcms] to handle applications directly on your website.
 
+### Use cases:
+
+- Job Applications
+- Volunteer Applications
+
 ## Installation
 
 1. Download the [Official Release][release]
@@ -10,6 +15,11 @@ This plugin was developed by [Jason McCallister][developer] for [Craft][craftcms
 4. Add your custom fields for your application forms @ `settings > fields`
 5. Create a new `Application Form` @ `applications > form` and assign the custom fields
 6. Use Applications and enjoy! Don't forget to report any bugs or feature requests!
+
+## To dos
+
+1. Application status of pending, approved, declined
+2. Applicant email address (since the form is online)
 
 ## Contributing
 
