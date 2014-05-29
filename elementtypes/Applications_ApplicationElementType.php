@@ -33,7 +33,7 @@ class Applications_ApplicationElementType extends BaseElementType
      */
     public function hasTitles()
     {
-        return false;
+        return true;
     }
 
     /**
