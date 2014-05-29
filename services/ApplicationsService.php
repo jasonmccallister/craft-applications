@@ -103,20 +103,20 @@ class ApplicationsService extends BaseApplicationComponent
 	/**
 	 * Fires an 'onBeforeSaveApplication' event.
 	 *
-	 * @param Application $application
+	 * @param Event $event
 	 */
-	public function onBeforeSaveApplication(Application $application)
+	public function onBeforeSaveApplication(Event $event)
 	{
-		$this->raiseEvent('onBeforeSaveApplication', $application);
+		$this->raiseEvent('onBeforeSaveApplication', $event);
 	}
 
 	/**
 	 * Fires an 'onSaveApplication' event.
 	 *
-	 * @param Application $application
+	 * @param Event $event
 	 */
-	public function onSaveApplication(Application $application)
+	public function onSaveApplication(Event $event)
 	{
-		$this->raiseEvent('onSaveApplication', $application);
+		$this->raiseEvent('onSaveApplication', $event);
 	}
 }
