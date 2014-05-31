@@ -1,5 +1,9 @@
 # Applications Plugin
 
+**NOTE: Due to naming this plugin is being named and additional features are being added. As soon as that plugin is updated and released I will update this repository.**
+
+**I will be leaving this repository as an example.**
+
 This plugin was developed by [Jason McCallister][developer] for [Craft][craftcms] to handle applications directly on your website.
 
 ### Use cases:
