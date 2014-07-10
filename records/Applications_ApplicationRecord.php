@@ -21,6 +21,12 @@ class Applications_ApplicationRecord extends BaseRecord
     protected function defineAttributes()
     {
         return array(
+            'applicantName' => array(
+                AttributeType::String, 'required' => true
+            ),
+            'applicantEmail' => array(
+                AttributeType::String, 'required' => true
+            ),
             'submitDate' => array(
                 AttributeType::DateTime, 'required' => true
             ),
