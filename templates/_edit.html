@@ -3,59 +3,57 @@
 
 {% set formHandle = form.handle %}
 
-
-{% macro dateTimeField(application, attribute, label) %}
-
-	{% import "_includes/forms" as forms %}
-
-	{% set input %}
-		{{ forms.date({
-			id:        attribute,
-			name:      attribute,
-			value:     application.getAttribute(attribute),
-			errors:    application.getErrors(attribute),
-		}) }}
-
-		{{ forms.time({
-			id:        attribute,
-			name:      attribute,
-			value:     application.getAttribute(attribute),
-			errors:    application.getErrors(attribute),
-		}) }}
-	{% endset %}
-
-	{{ forms.field({
-		id:       attribute,
-		label:    label,
-		first:    (attribute == 'submitDate'),
-		required: true
-	}, input) }}
-
-{% endmacro %}
-
-{% from _self import dateTimeField %}
-
 {% block content %}
 
 	<form id="application-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
 		<input type="hidden" name="action" value="applications/saveApplication">
 		<input type="hidden" name="redirect" value="applications">
 		<input type="hidden" name="formId" value="{{ form.id }}">
-		{% if application.id %}<input type="hidden" name="applicationId" value="{{ application.id }}">{% endif %}
-		{% if craft.isLocalized() %}<input type="hidden" name="locale" value="{{ application.locale }}">{% endif %}
+		{% if application.id %}
+			<input type="hidden" name="applicationId" value="{{ application.id }}">
+		{% endif %}
+		{% if craft.isLocalized() %}
+			<input type="hidden" name="locale" value="{{ application.locale }}">
+		{% endif %}
 
 		{{ forms.textField({
-			label: "Title"|t,
-			id: 'title',
-			name: 'title',
-			value: application.title,
-			errors: application.getErrors('title'),
+			label: "Applicant Name"|t,
+			id: 'applicantName',
+			name: 'applicantName',
+			value: application.applicantName,
+			errors: application.getErrors('applicantName'),
 			first: true,
 			autofocus: true,
 			required: true
 		}) }}
 
-		{{ dateTimeField(application, 'submitDate', "Submit Date"|t, true) }}
+		{{ forms.textField({
+			label: "Applicant Email"|t,
+			id: 'applicantEmail',
+			name: 'applicantEmail',
+			value: application.applicantEmail,
+			errors: application.getErrors('applicantEmail'),
+			required: true
+		}) }}
+
+		{{ forms.dateTimeField({
+			label: "Submit Date"|t,
+			id: 'submitDate',
+			name: 'submitDate',
+			value: (entry.submitDate ? entry.submitDate : null),
+			errors: entry.getErrors('submitDate'),
+			required: true
+		}) }}
+
+		{{ forms.checkboxField({
+			label: "Agreed To Terms"|t,
+			id: "agreedToTerms",
+			name: 'agreedToTerms',
+			value: application.agreedToTerms,
+			errors: application.getErrors('agreedToTerms')
+		}) }}
+
+		<hr>
 
 		<div>
 			{% for tab in form.getFieldLayout().getTabs() %}
