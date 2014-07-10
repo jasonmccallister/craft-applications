@@ -9,6 +9,16 @@ class Applications_ApplicationModel extends BaseElementModel
     protected $elementType = 'Applications_Application';
 
     /**
+     * Use the element's applicant name as its string representation.
+     *
+     * @return string
+     */
+    function __toString()
+    {
+        return $this->applicantName;
+    }
+
+    /**
      * @access protected
      * @return array
      */
@@ -19,7 +29,7 @@ class Applications_ApplicationModel extends BaseElementModel
                 'formId' => AttributeType::Number,
                 'applicantName' => AttributeType::String,
                 'applicantEmail' => AttributeType::Email,
-                'agreedToTerms' => AttributeType::Bool,
+                'applicantPhone' => AttributeType::String,
                 'submitDate'  => AttributeType::DateTime,
             )
         );
@@ -77,4 +87,5 @@ class Applications_ApplicationModel extends BaseElementModel
             return craft()->applications_forms->getFormById($this->formId);
         }
     }
+
 }
