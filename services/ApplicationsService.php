@@ -47,7 +47,7 @@ class ApplicationsService extends BaseApplicationComponent
         $applicationRecord->submitDate     = $application->submitDate;
         $applicationRecord->applicantName  = $application->applicantName;
         $applicationRecord->applicantEmail = $application->applicantEmail;
-        $applicationRecord->agreedToTerms  = $application->agreedToTerms;
+        $applicationRecord->applicantPhone  = $application->applicantPhone;
 
         $applicationRecord->validate();
         $application->addErrors($applicationRecord->getErrors());
