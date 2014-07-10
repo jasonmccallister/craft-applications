@@ -1,6 +1,8 @@
 <?php
 namespace Craft;
 
+include(dirname(__FILE__) . '/../enums/ApplicationsApplicationStatus.php');
+
 /**
  * Applications - Application element type
  */
@@ -55,9 +57,9 @@ class Applications_ApplicationElementType extends BaseElementType
     public function getStatuses()
     {
         return array(
-            'approved' => Craft::t('Approved'),
-            'pending'  => Craft::t('Pending'),
-            'denied'   => Craft::t('Denied')
+            ApplicationsApplicationStatus::Approved => Craft::t('Approved'),
+            ApplicationsApplicationStatus::Pending  => Craft::t('Pending'),
+            ApplicationsApplicationStatus::Denied   => Craft::t('Denied')
         );
     }
 
