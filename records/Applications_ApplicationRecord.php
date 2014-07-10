@@ -30,6 +30,15 @@ class Applications_ApplicationRecord extends BaseRecord
             'applicantPhone' => array(
                 AttributeType::String, 'required' => true
             ),
+            'applicationStatus' => array(
+                AttributeType::Enum,
+                'values' => array(
+                    ApplicationsApplicationStatus::Approved,
+                    ApplicationsApplicationStatus::Denied,
+                    ApplicationsApplicationStatus::Pending
+                ),
+                'default' => ApplicationsApplicationStatus::Pending
+            ),
             'submitDate' => array(
                 AttributeType::DateTime, 'required' => true
             ),
