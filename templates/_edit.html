@@ -16,42 +16,57 @@
 			<input type="hidden" name="locale" value="{{ application.locale }}">
 		{% endif %}
 
-		{{ forms.textField({
-			label: "Applicant Name"|t,
-			id: 'applicantName',
-			name: 'applicantName',
-			value: application.applicantName,
-			errors: application.getErrors('applicantName'),
-			first: true,
-			autofocus: true,
-			required: true
-		}) }}
+		<div class="left" style="width: 40%;">
+			{{ forms.textField({
+				label: "Applicants Name"|t,
+				id: 'applicantName',
+				name: 'applicantName',
+				instructions: "First and last name (i.e John Doe)",
+				value: application.applicantName,
+				errors: application.getErrors('applicantName'),
+				first: true,
+				autofocus: true,
+				required: true
+			}) }}
+		</div>
 
-		{{ forms.textField({
-			label: "Applicant Email"|t,
-			id: 'applicantEmail',
-			name: 'applicantEmail',
-			value: application.applicantEmail,
-			errors: application.getErrors('applicantEmail'),
-			required: true
-		}) }}
+		<div class="right" style="width: 50%">
+			{{ forms.textField({
+				label: "Applicants Email"|t,
+				id: 'applicantEmail',
+				name: 'applicantEmail',
+				instructions: "Applicants email address, notifications will be sent to this email",
+				value: application.applicantEmail,
+				errors: application.getErrors('applicantEmail'),
+				required: true
+			}) }}
+		</div>
+		<div class="clear"></div>
 
-		{{ forms.dateTimeField({
-			label: "Submit Date"|t,
-			id: 'submitDate',
-			name: 'submitDate',
-			value: (entry.submitDate ? entry.submitDate : null),
-			errors: entry.getErrors('submitDate'),
-			required: true
-		}) }}
+		<div class="left" style="width: 40%; margin-top: 21px">
+			{{ forms.dateField({
+				label: "Submit Date"|t,
+				id: 'submitDate',
+				name: 'submitDate',
+				instructions: "Submission date of the application",
+				value: application.submitDate,
+				errors: entry.getErrors('submitDate'),
+				required: true
+			}) }}
+		</div>
 
-		{{ forms.checkboxField({
-			label: "Agreed To Terms"|t,
-			id: "agreedToTerms",
-			name: 'agreedToTerms',
-			value: application.agreedToTerms,
-			errors: application.getErrors('agreedToTerms')
-		}) }}
+		<div class="right" style="width: 50%; margin-top: 21px">
+			<p>Did the applicant agree to the terms and conditions you specified?</p>
+
+			{{ forms.checkboxField({
+				label: "Agreed To Terms"|t,
+				id: "agreedToTerms",
+				name: 'agreedToTerms',
+				value: application.agreedToTerms,
+				errors: application.getErrors('agreedToTerms')
+			}) }}
+		</div>
+		<div class="clear"></div>
 
 		<hr>
 
@@ -65,6 +80,8 @@
 				</div>
 			{% endfor %}
 		</div>
+
+		<hr>
 
 		<div class="buttons">
 			<div class="btngroup submit first">
