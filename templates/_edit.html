@@ -44,6 +44,18 @@
 		<div class="clear"></div>
 
 		<div class="left" style="width: 40%; margin-top: 21px">
+			{{ forms.textField({
+				label: "Phone Number"|t,
+				id: 'applicantPhone',
+				name: 'applicantPhone',
+				instructions: "Applicants phone number",
+				value: application.applicantPhone,
+				errors: application.getErrors('applicantPhone'),
+				required: true
+			}) }}
+		</div>
+
+		<div class="right" style="width: 50%; margin-top: 21px">
 			{{ forms.dateField({
 				label: "Submit Date"|t,
 				id: 'submitDate',
@@ -52,18 +64,6 @@
 				value: application.submitDate,
 				errors: entry.getErrors('submitDate'),
 				required: true
-			}) }}
-		</div>
-
-		<div class="right" style="width: 50%; margin-top: 21px">
-			<p>Did the applicant agree to the terms and conditions you specified?</p>
-
-			{{ forms.checkboxField({
-				label: "Agreed To Terms"|t,
-				id: "agreedToTerms",
-				name: 'agreedToTerms',
-				value: application.agreedToTerms,
-				errors: application.getErrors('agreedToTerms')
 			}) }}
 		</div>
 		<div class="clear"></div>
