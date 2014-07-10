@@ -29,7 +29,7 @@ class Applications_ApplicationRecord extends BaseRecord
             ),
             'agreedToTerms' => array(
                 AttributeType::Bool, 'required' => true
-            )
+            ),
             'submitDate' => array(
                 AttributeType::DateTime, 'required' => true
             ),
