@@ -33,6 +33,16 @@ class Applications_ApplicationElementType extends BaseElementType
      */
     public function hasTitles()
     {
+        return false;
+    }
+
+    /**
+     * Returns whether this element type can have statuses.
+     *
+     * @return bool
+     */
+    public function hasStatuses()
+    {
         return true;
     }
 
@@ -46,7 +56,7 @@ class Applications_ApplicationElementType extends BaseElementType
     {
         $sources = array(
             '*' => array(
-                'label'    => Craft::t('All applications'),
+                'label' => Craft::t('All applications'),
             )
         );
 
@@ -74,7 +84,8 @@ class Applications_ApplicationElementType extends BaseElementType
     public function defineTableAttributes($source = null)
     {
         return array(
-            'title'      => Craft::t('Title'),
+            'applicantName' => Craft::t('Applicant'),
+            'applicantEmail' => Craft::t('Email'),
             'submitDate' => Craft::t('Submit Date'),
         );
     }
@@ -121,6 +132,8 @@ class Applications_ApplicationElementType extends BaseElementType
         return array(
             'form'        => AttributeType::Mixed,
             'formId'      => AttributeType::Mixed,
+            'applicantName' => AttributeType::Mixed,
+            'applicantEmail' => AttributeType::Mixed,
             'submitDate'  => AttributeType::Mixed,
             'order'       => array(
                 AttributeType::String, 'default' => 'applications.submitDate asc'
