@@ -13,7 +13,7 @@ class ApplicationsPlugin extends BasePlugin
 
     public function getVersion()
     {
-        return '0.9';
+        return '1.0';
     }
 
     public function getDeveloper()
@@ -34,19 +34,19 @@ class ApplicationsPlugin extends BasePlugin
     public function registerCpRoutes()
     {
         return array(
-            'applications/forms'                                           => array(
+            'applications/forms' => array(
                 'action' => 'applications/forms/formIndex'
             ),
-            'applications/forms/new'                                       => array(
+            'applications/forms/new' => array(
                 'action' => 'applications/forms/editForm'
             ),
-            'applications/forms/(?P<formId>\d+)'                           => array(
+            'applications/forms/(?P<formId>\d+)' => array(
                 'action' => 'applications/forms/editForm'
             ),
-            'applications'                                                 => array(
+            'applications' => array(
                 'action' => 'applications/applicationIndex'
             ),
-            'applications/(?P<formHandle>{handle})/new'                    => array(
+            'applications/(?P<formHandle>{handle})/new' => array(
                 'action' => 'applications/editApplication'
             ),
             'applications/(?P<formHandle>{handle})/(?P<applicationId>\d+)' => array(
