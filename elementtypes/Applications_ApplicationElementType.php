@@ -1,8 +1,6 @@
 <?php
 namespace Craft;
 
-include(dirname(__FILE__) . '/../enums/ApplicationsApplicationStatus.php');
-
 /**
  * Applications - Application element type
  */
@@ -45,7 +43,7 @@ class Applications_ApplicationElementType extends BaseElementType
      */
     public function hasStatuses()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -58,8 +56,8 @@ class Applications_ApplicationElementType extends BaseElementType
     {
         return array(
             ApplicationsApplicationStatus::Approved => Craft::t('Approved'),
+            ApplicationsApplicationStatus::Denied   => Craft::t('Denied'),
             ApplicationsApplicationStatus::Pending  => Craft::t('Pending'),
-            ApplicationsApplicationStatus::Denied   => Craft::t('Denied')
         );
     }
 
@@ -104,9 +102,20 @@ class Applications_ApplicationElementType extends BaseElementType
             'applicantName' => Craft::t('Applicant'),
             'applicantEmail' => Craft::t('Email'),
             'applicantPhone' => Craft::t('Phone'),
+            'applicationStatus' => Craft::t('Status'),
             'submitDate' => Craft::t('Submit Date'),
         );
     }
+
+    /**
+	 * Defines which model attributes should be searchable.
+	 *
+	 * @return array
+	 */
+	public function defineSearchableAttributes()
+	{
+		return array('applicantName', 'applicantEmail', 'applicantPhone', 'applicationStatus', 'submitDate');
+	}
 
     /**
      * Returns the table view HTML for a given attribute.
@@ -150,12 +159,22 @@ class Applications_ApplicationElementType extends BaseElementType
         return array(
             'form'           => AttributeType::Mixed,
             'formId'         => AttributeType::Mixed,
-            'applicantName'  => AttributeType::String,
-            'applicantEmail' => AttributeType::Email,
-            'applicantPhone' => AttributeType::String,
+            'applicantName'           => AttributeType::String,
+            'applicantEmail'          => AttributeType::Email,
+            'applicantPhone'          => AttributeType::String,
+            'applicationStatus'         => array(
+                AttributeType::Enum,
+                'values'     => array(
+                    ApplicationsApplicationStatus::Approved,
+                    ApplicationsApplicationStatus::Denied,
+                    ApplicationsApplicationStatus::Pending
+                ),
+                'default'    => ApplicationsApplicationStatus::Pending
+            ),
             'submitDate'     => AttributeType::Mixed,
             'order'          => array(
-                AttributeType::String, 'default' => 'applications.submitDate asc'
+                AttributeType::String,
+                'default'    => 'applications.submitDate asc'
             ),
         );
     }
@@ -171,7 +190,7 @@ class Applications_ApplicationElementType extends BaseElementType
     {
         $query
             // you must add the columns here when adding a new field
-            ->addSelect('applications.formId, applications.applicantName, applications.applicantEmail, applications.applicantPhone, applications.submitDate,')
+            ->addSelect('applications.formId, applications.applicantName, applications.applicantEmail, applications.applicationStatus, applications.applicantPhone, applications.submitDate,')
             ->join('applications applications', 'applications.id = elements.id');
 
         if ($criteria->formId)
