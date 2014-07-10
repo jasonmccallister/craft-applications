@@ -11,7 +11,7 @@ class ApplicationsController extends BaseController
 	 * @access protected
 	 */
 	protected $allowAnonymous = true;
-    
+
     /**
      * Application index
      */
@@ -143,10 +143,11 @@ class ApplicationsController extends BaseController
 
         // Set the application attributes, defaulting to the existing values for whatever is missing from the post data
         $application->formId = craft()->request->getPost('formId', $application->formId);
+		$application->applicantName = craft()->request->getPost('applicantName');
+		$application->applicantEmail = craft()->request->getPost('applicantEmail');
+		$application->applicantPhone = craft()->request->getPost('applicantPhone');
+		$application->applicationStatus = craft()->request->getPost('applicationStatus');
         $application->submitDate  = (($submitDate = craft()->request->getPost('submitDate')) ? DateTime::createFromString($submitDate, craft()->timezone) : null);
-        $application->applicantName = craft()->request->getPost('applicantName');
-        $application->applicantEmail = craft()->request->getPost('applicantEmail');
-        $application->applicantPhone = craft()->request->getPost('applicantPhone');
 
         // @TODO validate removing this as titles are no longer
         // $application->getContent()->title = craft()->request->getPost('title', $application->title);
