@@ -1,104 +1,122 @@
 {% extends "_layouts/cp" %}
 {% import "_includes/forms" as forms %}
 
+{# @TODO remove this soon as it doesnt work #}
+{% set applicationStatuses = {
+    'Approved': 'Approved'|t,
+    'Denied': 'Denied'|t,
+    'Pending': 'Pending'|t
+} %}
+
 {% set formHandle = form.handle %}
 
 {% block content %}
 
-	<form id="application-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
-		<input type="hidden" name="action" value="applications/saveApplication">
-		<input type="hidden" name="redirect" value="applications">
-		<input type="hidden" name="formId" value="{{ form.id }}">
-		{% if application.id %}
-			<input type="hidden" name="applicationId" value="{{ application.id }}">
-		{% endif %}
-		{% if craft.isLocalized() %}
-			<input type="hidden" name="locale" value="{{ application.locale }}">
-		{% endif %}
+    <form id="application-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
+        <input type="hidden" name="action" value="applications/saveApplication">
+        <input type="hidden" name="redirect" value="applications">
+        <input type="hidden" name="formId" value="{{ form.id }}">
+        {% if application.id %}
+            <input type="hidden" name="applicationId" value="{{ application.id }}">
+        {% endif %}
+        {% if craft.isLocalized() %}
+            <input type="hidden" name="locale" value="{{ application.locale }}">
+        {% endif %}
 
-		<div class="left" style="width: 40%;">
-			{{ forms.textField({
-				label: "Applicants Name"|t,
-				id: 'applicantName',
-				name: 'applicantName',
-				instructions: "First and last name (i.e John Doe)",
-				value: application.applicantName,
-				errors: application.getErrors('applicantName'),
-				first: true,
-				autofocus: true,
-				required: true
-			}) }}
-		</div>
+        <div class="left" style="width: 40%;">
+            {{ forms.textField({
+                label: "Applicants Name"|t,
+                id: 'applicantName',
+                name: 'applicantName',
+                instructions: "First and last name (i.e John Doe)",
+                value: application.applicantName,
+                errors: application.getErrors('applicantName'),
+                first: true,
+                autofocus: true,
+                required: true
+            }) }}
+        </div>
 
-		<div class="right" style="width: 50%">
-			{{ forms.textField({
-				label: "Applicants Email"|t,
-				id: 'applicantEmail',
-				name: 'applicantEmail',
-				instructions: "Applicants email address, notifications will be sent to this email",
-				value: application.applicantEmail,
-				errors: application.getErrors('applicantEmail'),
-				required: true
-			}) }}
-		</div>
-		<div class="clear"></div>
+        <div class="right" style="width: 50%">
+            {{ forms.textField({
+                label: "Applicants Email"|t,
+                id: 'applicantEmail',
+                name: 'applicantEmail',
+                instructions: "Applicants email address, notifications will be sent to this email",
+                value: application.applicantEmail,
+                errors: application.getErrors('applicantEmail'),
+                required: true
+            }) }}
+        </div>
+        <div class="clear"></div>
 
-		<div class="left" style="width: 40%; margin-top: 21px">
-			{{ forms.textField({
-				label: "Phone Number"|t,
-				id: 'applicantPhone',
-				name: 'applicantPhone',
-				instructions: "Applicants phone number",
-				value: application.applicantPhone,
-				errors: application.getErrors('applicantPhone'),
-				required: true
-			}) }}
-		</div>
+        <div class="left" style="width: 40%; margin-top: 21px">
+            {{ forms.textField({
+                label: "Phone Number"|t,
+                id: 'applicantPhone',
+                name: 'applicantPhone',
+                instructions: "Applicants phone number",
+                value: application.applicantPhone,
+                errors: application.getErrors('applicantPhone'),
+                required: true
+            }) }}
+        </div>
 
-		<div class="right" style="width: 50%; margin-top: 21px">
-			{{ forms.dateField({
-				label: "Submit Date"|t,
-				id: 'submitDate',
-				name: 'submitDate',
-				instructions: "Submission date of the application",
-				value: application.submitDate,
-				errors: entry.getErrors('submitDate'),
-				required: true
-			}) }}
-		</div>
-		<div class="clear"></div>
+        <div class="right" style="width: 50%; margin-top: 21px">
+            {{ forms.dateField({
+                label: "Submit Date"|t,
+                id: 'submitDate',
+                name: 'submitDate',
+                instructions: "Submission date of the application",
+                value: application.submitDate,
+                errors: application.getErrors('submitDate'),
+                required: true
+            }) }}
+        </div>
+        <div class="clear"></div>
 
-		<hr>
+        <hr>
 
-		<div>
-			{% for tab in form.getFieldLayout().getTabs() %}
-				<div id="tab{{ loop.index }}"{% if not loop.first %} class="hidden"{% endif %}>
-					{% include "_includes/fields" with {
-						fields: tab.getFields(),
-						element: application
-					} only %}
-				</div>
-			{% endfor %}
-		</div>
+        {{ forms.selectField({
+            label: "Application Status"|t,
+            id: 'application.applicationStatus',
+            name: 'application.applicationStatus',
+			instructions: "Current status of the application",
+            options: applicationStatuses,
+            value: application.applicationStatus,
+        }) }}
 
-		<hr>
+        <hr>
 
-		<div class="buttons">
-			<div class="btngroup submit first">
-				<input type="submit" class="btn submit" value="{{ 'Save'|t }}">
+        <div>
+            {% for tab in form.getFieldLayout().getTabs() %}
+                <div id="tab{{ loop.index }}"{% if not loop.first %} class="hidden"{% endif %}>
+                    {% include "_includes/fields" with {
+                        fields: tab.getFields(),
+                        element: application
+                    } only %}
+                </div>
+            {% endfor %}
+        </div>
 
-				<div class="btn submit menubtn"></div>
-				<div class="menu">
-					<ul>
-						<li><a class="formsubmit" data-redirect="{{ continueEditingUrl }}">{{ "Save and continue editing"|t }}</a></li>
-						<li><a class="formsubmit" data-redirect="applications/{{ formHandle }}/new">{{ "Save and add another"|t }}</a></li>
-					</ul>
-				</div>
-			</div>
+        <hr>
 
-			<input type="button" class="btn formsubmit" value="{{ 'Delete'|t }}" data-action="applications/deleteApplication"
-				data-confirm="{{ 'Are you sure you want to delete this application?'|t }}"
-				data-redirect="applications">
-		</div>
-	</form>
+        <div class="buttons">
+            <div class="btngroup submit first">
+                <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
+
+                <div class="btn submit menubtn"></div>
+                <div class="menu">
+                    <ul>
+                        <li><a class="formsubmit" data-redirect="{{ continueEditingUrl }}">{{ "Save and continue editing"|t }}</a></li>
+                        <li><a class="formsubmit" data-redirect="applications/{{ formHandle }}/new">{{ "Save and add another"|t }}</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <input type="button" class="btn formsubmit" value="{{ 'Delete'|t }}" data-action="applications/deleteApplication"
+                data-confirm="{{ 'Are you sure you want to delete this application?'|t }}"
+                data-redirect="applications">
+        </div>
+    </form>
 {% endblock %}
