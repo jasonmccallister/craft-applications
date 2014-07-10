@@ -52,14 +52,14 @@ class Applications_ApplicationElementType extends BaseElementType
      * @return array|null
      */
     //  @TODO research creating an enum for the statuses
-    // public function getStatuses()
-    // {
-    //     return array(
-    //         ApplicationStatus::Approved => Craft::t('Approved'),
-    //         ApplicationStatus::Pending  => Craft::t('Pending'),
-    //         ApplicationStatus::Denied   => Craft::t('Denied')
-    //     );
-    // }
+    public function getStatuses()
+    {
+        return array(
+            'approved' => Craft::t('Approved'),
+            'pending'  => Craft::t('Pending'),
+            'denied'   => Craft::t('Denied')
+        );
+    }
 
     /**
      * Returns this element type's sources.
