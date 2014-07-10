@@ -17,6 +17,8 @@ class Applications_ApplicationModel extends BaseElementModel
         return array_merge(
             parent::defineAttributes(), array(
                 'formId' => AttributeType::Number,
+                'applicantName' => AttributeType::String,
+                'applicantEmail' => AttributeType::String,
                 'submitDate'  => AttributeType::DateTime,
             )
         );
