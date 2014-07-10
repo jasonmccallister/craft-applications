@@ -25,7 +25,7 @@ class Applications_ApplicationRecord extends BaseRecord
                 AttributeType::String, 'required' => true
             ),
             'applicantEmail' => array(
-                AttributeType::String, 'required' => true
+                AttributeType::Email, 'required' => true
             ),
             'agreedToTerms' => array(
                 AttributeType::Bool, 'required' => true
