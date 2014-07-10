@@ -131,13 +131,13 @@ class Applications_ApplicationElementType extends BaseElementType
     public function defineCriteriaAttributes()
     {
         return array(
-            'form'        => AttributeType::Mixed,
-            'formId'      => AttributeType::Mixed,
-            'applicantName' => AttributeType::Mixed,
-            'applicantEmail' => AttributeType::Mixed,
-            'agreedToTerms' => AttributeType::Mixed,
-            'submitDate'  => AttributeType::Mixed,
-            'order'       => array(
+            'form'           => AttributeType::Mixed,
+            'formId'         => AttributeType::Mixed,
+            'applicantName'  => AttributeType::String,
+            'applicantEmail' => AttributeType::Email,
+            'agreedToTerms'  => AttributeType::Bool,
+            'submitDate'     => AttributeType::Mixed,
+            'order'          => array(
                 AttributeType::String, 'default' => 'applications.submitDate asc'
             ),
         );
