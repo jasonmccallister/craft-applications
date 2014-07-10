@@ -43,7 +43,7 @@ class Applications_ApplicationElementType extends BaseElementType
      */
     public function hasStatuses()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -102,7 +102,7 @@ class Applications_ApplicationElementType extends BaseElementType
             'applicantName' => Craft::t('Applicant'),
             'applicantEmail' => Craft::t('Email'),
             'applicantPhone' => Craft::t('Phone'),
-            'applicationStatus' => Craft::t('Status'),
+            // 'applicationStatus' => Craft::t('Status'),
             'submitDate' => Craft::t('Submit Date'),
         );
     }
