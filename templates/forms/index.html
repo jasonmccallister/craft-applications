@@ -2,8 +2,14 @@
 {% set title = "Forms"|t %}
 
 {% set tabs = {
-	applications:    { label: "Applications"|t, url: url('applications') },
-	forms: { label: "Forms"|t, url: url('applications/forms') }
+	applications: {
+		label: "Applications"|t,
+		url: url('applications')
+	},
+	forms: {
+		label: "Forms"|t,
+		url: url('applications/forms')
+	}
 } %}
 
 {% set selectedTab = 'forms' %}
