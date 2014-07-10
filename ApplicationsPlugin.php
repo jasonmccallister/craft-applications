@@ -1,6 +1,9 @@
 <?php
 namespace Craft;
 
+// include enums for custom statuses
+include(dirname(__FILE__) . '/enums/ApplicationsApplicationStatus.php');
+
 /**
  * Application plugin class
  */
