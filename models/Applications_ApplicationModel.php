@@ -19,6 +19,7 @@ class Applications_ApplicationModel extends BaseElementModel
                 'formId' => AttributeType::Number,
                 'applicantName' => AttributeType::String,
                 'applicantEmail' => AttributeType::String,
+                'agreedToTerms' => AttributeType::Bool,
                 'submitDate'  => AttributeType::DateTime,
             )
         );

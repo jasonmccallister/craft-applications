@@ -86,6 +86,7 @@ class Applications_ApplicationElementType extends BaseElementType
         return array(
             'applicantName' => Craft::t('Applicant'),
             'applicantEmail' => Craft::t('Email'),
+            'agreedToTerms' => Craft::t('Agreed to Terms'),
             'submitDate' => Craft::t('Submit Date'),
         );
     }
@@ -134,6 +135,7 @@ class Applications_ApplicationElementType extends BaseElementType
             'formId'      => AttributeType::Mixed,
             'applicantName' => AttributeType::Mixed,
             'applicantEmail' => AttributeType::Mixed,
+            'agreedToTerms' => AttributeType::Mixed,
             'submitDate'  => AttributeType::Mixed,
             'order'       => array(
                 AttributeType::String, 'default' => 'applications.submitDate asc'
