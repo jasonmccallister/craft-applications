@@ -7,6 +7,12 @@ namespace Craft;
 class ApplicationsController extends BaseController
 {
     /**
+	 * @var Allows anonymous access to this controller's actions.
+	 * @access protected
+	 */
+	protected $allowAnonymous = true;
+    
+    /**
      * Application index
      */
     public function actionApplicationIndex()
@@ -140,7 +146,7 @@ class ApplicationsController extends BaseController
         $application->submitDate  = (($submitDate = craft()->request->getPost('submitDate')) ? DateTime::createFromString($submitDate, craft()->timezone) : null);
         $application->applicantName = craft()->request->getPost('applicantName');
         $application->applicantEmail = craft()->request->getPost('applicantEmail');
-        $application->agreedToTerms = craft()->request->getPost('agreedToTerms');
+        $application->applicantPhone = craft()->request->getPost('applicantPhone');
 
         // @TODO validate removing this as titles are no longer
         // $application->getContent()->title = craft()->request->getPost('title', $application->title);
