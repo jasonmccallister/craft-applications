@@ -18,7 +18,7 @@ class Applications_ApplicationModel extends BaseElementModel
             parent::defineAttributes(), array(
                 'formId' => AttributeType::Number,
                 'applicantName' => AttributeType::String,
-                'applicantEmail' => AttributeType::String,
+                'applicantEmail' => AttributeType::Email,
                 'agreedToTerms' => AttributeType::Bool,
                 'submitDate'  => AttributeType::DateTime,
             )
