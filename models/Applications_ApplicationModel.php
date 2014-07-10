@@ -30,6 +30,15 @@ class Applications_ApplicationModel extends BaseElementModel
                 'applicantName' => AttributeType::String,
                 'applicantEmail' => AttributeType::Email,
                 'applicantPhone' => AttributeType::String,
+                'applicationStatus' => array(
+                    AttributeType::Enum,
+                    'values' => array(
+                        ApplicationsApplicationStatus::Approved,
+                        ApplicationsApplicationStatus::Denied,
+                        ApplicationsApplicationStatus::Pending
+                    ),
+                    'default' => ApplicationsApplicationStatus::Pending
+                ),
                 'submitDate'  => AttributeType::DateTime,
             )
         );
