@@ -114,7 +114,13 @@ class Applications_ApplicationElementType extends BaseElementType
 	 */
 	public function defineSearchableAttributes()
 	{
-		return array('applicantName', 'applicantEmail', 'applicantPhone', 'applicationStatus', 'submitDate');
+		return array(
+            'applicantName',
+            'applicantEmail',
+            'applicantPhone',
+            'applicationStatus',
+            'submitDate'
+        );
 	}
 
     /**
@@ -157,24 +163,24 @@ class Applications_ApplicationElementType extends BaseElementType
     public function defineCriteriaAttributes()
     {
         return array(
-            'form'           => AttributeType::Mixed,
-            'formId'         => AttributeType::Mixed,
-            'applicantName'           => AttributeType::String,
-            'applicantEmail'          => AttributeType::Email,
-            'applicantPhone'          => AttributeType::String,
-            'applicationStatus'         => array(
+            'form'              => AttributeType::Mixed,
+            'formId'            => AttributeType::Mixed,
+            'applicantName'     => AttributeType::String,
+            'applicantEmail'    => AttributeType::Email,
+            'applicantPhone'    => AttributeType::String,
+            'applicationStatus' => array(
                 AttributeType::Enum,
-                'values'     => array(
+                'values' => array(
                     ApplicationsApplicationStatus::Approved,
                     ApplicationsApplicationStatus::Denied,
                     ApplicationsApplicationStatus::Pending
                 ),
-                'default'    => ApplicationsApplicationStatus::Pending
+                'default' => ApplicationsApplicationStatus::Pending
             ),
-            'submitDate'     => AttributeType::Mixed,
-            'order'          => array(
+            'submitDate'       => AttributeType::Mixed,
+            'order'            => array(
                 AttributeType::String,
-                'default'    => 'applications.submitDate asc'
+                'default' => 'applications.submitDate asc'
             ),
         );
     }
@@ -190,7 +196,9 @@ class Applications_ApplicationElementType extends BaseElementType
     {
         $query
             // you must add the columns here when adding a new field
-            ->addSelect('applications.formId, applications.applicantName, applications.applicantEmail, applications.applicationStatus, applications.applicantPhone, applications.submitDate,')
+            ->addSelect('applications.formId, applications.applicantName,
+            applications.applicantEmail, applications.applicationStatus,
+            applications.applicantPhone, applications.submitDate,')
             ->join('applications applications', 'applications.id = elements.id');
 
         if ($criteria->formId)

@@ -26,10 +26,10 @@ class Applications_ApplicationModel extends BaseElementModel
     {
         return array_merge(
             parent::defineAttributes(), array(
-                'formId' => AttributeType::Number,
-                'applicantName' => AttributeType::String,
-                'applicantEmail' => AttributeType::Email,
-                'applicantPhone' => AttributeType::String,
+                'formId'            => AttributeType::Number,
+                'applicantName'     => AttributeType::String,
+                'applicantEmail'    => AttributeType::Email,
+                'applicantPhone'    => AttributeType::String,
                 'applicationStatus' => array(
                     AttributeType::Enum,
                     'values' => array(
@@ -39,7 +39,7 @@ class Applications_ApplicationModel extends BaseElementModel
                     ),
                     'default' => ApplicationsApplicationStatus::Pending
                 ),
-                'submitDate'  => AttributeType::DateTime,
+                'submitDate'        => AttributeType::DateTime
             )
         );
     }

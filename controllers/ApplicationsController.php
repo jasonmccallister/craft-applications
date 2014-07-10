@@ -7,10 +7,10 @@ namespace Craft;
 class ApplicationsController extends BaseController
 {
     /**
-	 * @var Allows anonymous access to this controller's actions.
-	 * @access protected
-	 */
-	protected $allowAnonymous = true;
+     * @var Allows anonymous access to this controller's actions.
+     * @access protected
+     */
+    protected $allowAnonymous = true;
 
     /**
      * Application index
@@ -133,7 +133,10 @@ class ApplicationsController extends BaseController
 
             if (!$application)
             {
-                throw new Exception(Craft::t('No application exists with the ID “{id}”', array('id' => $applicationId)));
+                throw new Exception(Craft::t('No application exists with the ID “{id}”', array(
+                    'id' => $applicationId
+                    )
+                ));
             }
         }
         else
@@ -142,12 +145,12 @@ class ApplicationsController extends BaseController
         }
 
         // Set the application attributes, defaulting to the existing values for whatever is missing from the post data
-        $application->formId = craft()->request->getPost('formId', $application->formId);
-		$application->applicantName = craft()->request->getPost('applicantName');
-		$application->applicantEmail = craft()->request->getPost('applicantEmail');
-		$application->applicantPhone = craft()->request->getPost('applicantPhone');
-		$application->applicationStatus = craft()->request->getPost('applicationStatus');
-        $application->submitDate  = (($submitDate = craft()->request->getPost('submitDate')) ? DateTime::createFromString($submitDate, craft()->timezone) : null);
+        $application->formId            = craft()->request->getPost('formId', $application->formId);
+        $application->applicantName     = craft()->request->getPost('applicantName');
+        $application->applicantEmail    = craft()->request->getPost('applicantEmail');
+        $application->applicantPhone    = craft()->request->getPost('applicantPhone');
+        $application->applicationStatus = craft()->request->getPost('applicationStatus');
+        $application->submitDate        = (($submitDate = craft()->request->getPost('submitDate')) ? DateTime::createFromString($submitDate, craft()->timezone) : null);
 
         // @TODO validate removing this as titles are no longer
         // $application->getContent()->title = craft()->request->getPost('title', $application->title);

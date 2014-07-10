@@ -53,8 +53,14 @@ class Applications_FormsController extends BaseController
         }
 
         $variables['crumbs'] = array(
-            array('label' => Craft::t('Applications'), 'url' => UrlHelper::getUrl('applications')),
-            array('label' => Craft::t('Forms'), 'url' => UrlHelper::getUrl('applications/forms')),
+            array(
+                'label' => Craft::t('Applications'),
+                'url' => UrlHelper::getUrl('applications')
+            ),
+            array(
+                'label' => Craft::t('Forms'),
+                'url' => UrlHelper::getUrl('applications/forms')
+            ),
         );
 
         $this->renderTemplate('applications/forms/_edit', $variables);
@@ -70,9 +76,9 @@ class Applications_FormsController extends BaseController
         $form = new Applications_FormModel();
 
         // Shared attributes
-        $form->id         = craft()->request->getPost('formId');
-        $form->name       = craft()->request->getPost('name');
-        $form->handle     = craft()->request->getPost('handle');
+        $form->id     = craft()->request->getPost('formId');
+        $form->name   = craft()->request->getPost('name');
+        $form->handle = craft()->request->getPost('handle');
 
         // Set the field layout
         $fieldLayout = craft()->fields->assembleLayoutFromPost();

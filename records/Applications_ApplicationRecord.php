@@ -22,13 +22,16 @@ class Applications_ApplicationRecord extends BaseRecord
     {
         return array(
             'applicantName' => array(
-                AttributeType::String, 'required' => true
+                AttributeType::String,
+                'required' => true
             ),
             'applicantEmail' => array(
-                AttributeType::Email, 'required' => true
+                AttributeType::Email,
+                'required' => true
             ),
             'applicantPhone' => array(
-                AttributeType::String, 'required' => true
+                AttributeType::String,
+                'required' => true
             ),
             'applicationStatus' => array(
                 AttributeType::Enum,
@@ -40,7 +43,8 @@ class Applications_ApplicationRecord extends BaseRecord
                 'default' => ApplicationsApplicationStatus::Pending
             ),
             'submitDate' => array(
-                AttributeType::DateTime, 'required' => true
+                AttributeType::DateTime,
+                'required' => true
             ),
         );
     }
@@ -52,10 +56,17 @@ class Applications_ApplicationRecord extends BaseRecord
     {
         return array(
             'element' => array(
-                static::BELONGS_TO, 'ElementRecord', 'id', 'required' => true, 'onDelete' => static::CASCADE
+                static::BELONGS_TO,
+                'ElementRecord',
+                'id',
+                'required' => true,
+                'onDelete' => static::CASCADE
             ),
             'form'    => array(
-                static::BELONGS_TO, 'Applications_FormRecord', 'required' => true, 'onDelete' => static::CASCADE
+                static::BELONGS_TO,
+                'Applications_FormRecord',
+                'required' => true,
+                'onDelete' => static::CASCADE
             ),
         );
     }
