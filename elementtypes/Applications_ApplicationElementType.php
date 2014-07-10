@@ -47,6 +47,20 @@ class Applications_ApplicationElementType extends BaseElementType
     }
 
     /**
+     * Returns all of the possible statuses that elements of this type may have.
+     *
+     * @return array|null
+     */
+    // public function getStatuses()
+    // {
+    //     return array(
+    //         ApplicationStatus::Approved => Craft::t('Approved'),
+    //         ApplicationStatus::Pending  => Craft::t('Pending'),
+    //         ApplicationStatus::Denied   => Craft::t('Denied')
+    //     );
+    // }
+
+    /**
      * Returns this element type's sources.
      *
      * @param string|null $context
@@ -153,7 +167,8 @@ class Applications_ApplicationElementType extends BaseElementType
     public function modifyElementsQuery(DbCommand $query, ElementCriteriaModel $criteria)
     {
         $query
-            ->addSelect('applications.formId, applications.submitDate')
+            // you must add the columns here when adding a new field
+            ->addSelect('applications.formId, applications.applicantName, applications.applicantEmail, applications.agreedToTerms, applications.submitDate,')
             ->join('applications applications', 'applications.id = elements.id');
 
         if ($criteria->formId)
