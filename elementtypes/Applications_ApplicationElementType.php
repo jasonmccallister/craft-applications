@@ -101,7 +101,7 @@ class Applications_ApplicationElementType extends BaseElementType
         return array(
             'applicantName' => Craft::t('Applicant'),
             'applicantEmail' => Craft::t('Email'),
-            'agreedToTerms' => Craft::t('Agreed to Terms'),
+            'applicantPhone' => Craft::t('Phone'),
             'submitDate' => Craft::t('Submit Date'),
         );
     }
@@ -150,7 +150,7 @@ class Applications_ApplicationElementType extends BaseElementType
             'formId'         => AttributeType::Mixed,
             'applicantName'  => AttributeType::String,
             'applicantEmail' => AttributeType::Email,
-            'agreedToTerms'  => AttributeType::Bool,
+            'applicantPhone' => AttributeType::String,
             'submitDate'     => AttributeType::Mixed,
             'order'          => array(
                 AttributeType::String, 'default' => 'applications.submitDate asc'
@@ -169,7 +169,7 @@ class Applications_ApplicationElementType extends BaseElementType
     {
         $query
             // you must add the columns here when adding a new field
-            ->addSelect('applications.formId, applications.applicantName, applications.applicantEmail, applications.agreedToTerms, applications.submitDate,')
+            ->addSelect('applications.formId, applications.applicantName, applications.applicantEmail, applications.applicantPhone, applications.submitDate,')
             ->join('applications applications', 'applications.id = elements.id');
 
         if ($criteria->formId)
