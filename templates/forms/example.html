@@ -12,7 +12,7 @@
 	},
 	example: {
 		label: "Example"|t,
-		url: url('applications/example')
+		url: url('applications/forms/example')
 	}
 } %}
 
@@ -36,26 +36,26 @@
 
 <pre><code>{% filter escape %}
 <form id="application-form" method="post" action="" accept-charset="UTF-8">
-  <input type="hidden" name="action" value="applications/application">
-  <input type="hidden" name="redirect" value="uri/to/thanks/page">
-  <input type="hidden" name="formId" value="1">
+<input type="hidden" name="action" value="applications/application">
+<input type="hidden" name="redirect" value="uri/to/thanks/page">
+<input type="hidden" name="formId" value="1">
 
-  <!-- Required Fields -->
-  <label>Name
-    <input type="text" name="applicantName" placeholder="John Doe" />
-  </label>
-  <label>Email
-    <input type="text" name="applicantEmail" placeholder="JohnDoe@gmail.com" />
-  </label>
-  <label>Phone Number
-    <input type="text" name="applicantPhone" placeholder="555-555-555" />
-  </label>
-  <!-- End Required Fields -->
+<!-- Required Fields -->
+<label>Name
+	<input type="text" name="applicantName" placeholder="John Doe" />
+</label>
+<label>Email
+	<input type="text" name="applicantEmail" placeholder="JohnDoe@gmail.com" />
+</label>
+<label>Phone Number
+	<input type="text" name="applicantPhone" placeholder="555-555-555" />
+</label>
+<!-- End Required Fields -->
 
-  <!-- My Custom Fields -->
-  <textarea name="myCustomField" id="myCustomField" rows="8" cols="40"></textarea>
+<!-- My Custom Fields -->
+<textarea name="myCustomField" id="myCustomField" rows="8" cols="40"></textarea>
 
-  <button type="submit">Apply Now</button>
+<button type="submit">Apply Now</button>
 </form>
 {% endfilter %}
 </code></pre>
