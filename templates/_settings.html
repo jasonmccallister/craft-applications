@@ -1,4 +1,7 @@
 {% import "_includes/forms" as forms %}
+<h2>Plugin Settings</h2>
+
+<p style="margin-bottom: 42px">You must edit these settings to ensure notifications. If you do not setup notifications, you <strong>will not</strong> receive application submission alerts.</p>
 
 {{ forms.textField({
 	first:        true,
@@ -9,4 +12,14 @@
 	value:        settings.notificationEmail,
 	autofocus:    true,
 	errors:       settings.getErrors('notificationEmail')
+}) }}
+
+{{ forms.textAreaField({
+	label:        "Notification Message"|t,
+	id:           'notificationMessage',
+	name:         'notificationMessage',
+	instructions: "The message content that will be sent in the notification email."|t,
+	value:        settings.notificationMessage,
+	rows:         '4',
+	errors:       settings.getErrors('notificationMessage')
 }) }}
