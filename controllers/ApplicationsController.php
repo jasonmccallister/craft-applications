@@ -2,7 +2,8 @@
 namespace Craft;
 
 /**
- * Applications controller
+ * Class ApplicationsController
+ * @package Craft
  */
 class ApplicationsController extends BaseController
 {
@@ -11,6 +12,19 @@ class ApplicationsController extends BaseController
      * @access protected
      */
     protected $allowAnonymous = true;
+
+    // public function actionPublicSubmission()
+    // {
+    //     // require post request
+    //     $this->requirePostRequest();
+    //
+    //     // grab settings for later use
+    //     $settings = craft()->plugins->getPlugin('applications')->getSettings();
+    //
+    //     // set the formId from post
+    //     $formId = craft()->request->getPost('formId');
+    //
+    // }
 
     /**
      * Application index
