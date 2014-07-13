@@ -1,0 +1,63 @@
+{% extends "_layouts/cp" %}
+{% set title = "Applications"|t %}
+
+{% set tabs = {
+	applications: {
+		label: "Applications"|t,
+		url: url('applications')
+	},
+	forms: {
+		label: "Forms"|t,
+		url: url('applications/forms')
+	},
+	example: {
+		label: "Example"|t,
+		url: url('applications/example')
+	}
+} %}
+
+{% set selectedTab = 'example' %}
+
+{% block content %}
+
+	<h2>Usage Instructions</h2>
+
+	<ol>
+		<li>Change the '<strong>redirect</strong>' hidden input to the URL you wish to send successful application submissions to.</li>
+		<li>Change the '<strong>formId</strong>' hidden input '<strong>value</strong>' to the form id number the application will submit too.</li>
+		<ul>
+			<li><i><strong>Note</strong>: the form ID can be found on the specific form page.</i></li>
+		</ul>
+		<li></li>
+		<li>Add your custom fields and away you go!</li>
+	</ol>
+
+	<hr>
+
+<pre><code>{% filter escape %}
+<form id="application-form" method="post" action="" accept-charset="UTF-8">
+  <input type="hidden" name="action" value="applications/application">
+  <input type="hidden" name="redirect" value="uri/to/thanks/page">
+  <input type="hidden" name="formId" value="1">
+
+  <!-- Required Fields -->
+  <label>Name
+    <input type="text" name="applicantName" placeholder="John Doe" />
+  </label>
+  <label>Email
+    <input type="text" name="applicantEmail" placeholder="JohnDoe@gmail.com" />
+  </label>
+  <label>Phone Number
+    <input type="text" name="applicantPhone" placeholder="555-555-555" />
+  </label>
+  <!-- End Required Fields -->
+
+  <!-- My Custom Fields -->
+  <textarea name="myCustomField" id="myCustomField" rows="8" cols="40"></textarea>
+
+  <button type="submit">Apply Now</button>
+</form>
+{% endfilter %}
+</code></pre>
+
+{% endblock %}
