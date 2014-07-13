@@ -85,9 +85,9 @@ class Applications_ApplicationModel extends BaseElementModel
     }
 
     /**
-     * Returns the applicaiton's form.
+     * Returns the application's form.
      *
-     * @return Applicaitons_FormModel|null
+     * @return Applications_FormModel|null
      */
     public function getForm()
     {
