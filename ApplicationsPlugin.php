@@ -9,31 +9,49 @@ include(dirname(__FILE__) . '/enums/ApplicationsApplicationStatus.php');
  */
 class ApplicationsPlugin extends BasePlugin
 {
+    /**
+     * @return string
+     */
     public function getName()
     {
-        return 'Applications';
+        return Craft::t('Applications');
     }
 
+    /**
+     * @return string
+     */
     public function getVersion()
     {
         return '1.0';
     }
 
+    /**
+     * @return string
+     */
     public function getDeveloper()
     {
         return 'Jason McCallister';
     }
 
+    /**
+     * @return string
+     */
     public function getDeveloperUrl()
     {
         return 'http://themccallister.com';
     }
 
+    /**
+     * @return bool
+     */
     public function hasCpSection()
     {
         return true;
     }
 
+    /**
+     * @return array
+     */
     protected function defineSettings()
     {
         return array(
@@ -41,9 +59,17 @@ class ApplicationsPlugin extends BasePlugin
                 AttributeType::Email,
                 'required' => true
             ),
+            'notificationMessage' => array(
+                AttributeType::String,
+                'required' => true,
+                'default' => "You have a new application submission on your website"
+            )
         );
     }
 
+    /**
+     * @return string
+     */
     public function getSettingsHtml()
     {
        return craft()->templates->render('applications/_settings', array(
@@ -51,6 +77,9 @@ class ApplicationsPlugin extends BasePlugin
        ));
    }
 
+    /**
+     * @return array
+     */
     public function registerCpRoutes()
     {
         return array(
