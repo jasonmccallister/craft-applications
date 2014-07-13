@@ -34,6 +34,23 @@ class ApplicationsPlugin extends BasePlugin
         return true;
     }
 
+    protected function defineSettings()
+    {
+        return array(
+            'notificationEmail' => array(
+                AttributeType::Email,
+                'required' => true
+            ),
+        );
+    }
+
+    public function getSettingsHtml()
+    {
+       return craft()->templates->render('applications/_settings', array(
+           'settings' => $this->getSettings()
+       ));
+   }
+
     public function registerCpRoutes()
     {
         return array(
