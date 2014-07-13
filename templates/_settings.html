@@ -1,0 +1,12 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+	first:        true,
+	label:        "Notification Email"|t,
+	id:           'notificationEmail',
+	name:         'notificationEmail',
+	instructions: "The email address that new application entries will be sent too. Separate multiple email addresses with commas."|t,
+	value:        settings.notificationEmail,
+	autofocus:    true,
+	errors:       settings.getErrors('notificationEmail')
+}) }}
