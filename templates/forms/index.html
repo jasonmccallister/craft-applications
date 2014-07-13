@@ -9,6 +9,10 @@
 	forms: {
 		label: "Forms"|t,
 		url: url('applications/forms')
+	},
+	example: {
+		label: "Example"|t,
+		url: url('applications/forms/example')
 	}
 } %}
 
@@ -28,6 +32,7 @@
 		<table id="forms" class="data fullwidth collapsible">
 
 			<thead>
+				<th class="thin">{{ "Form ID"|t }}</th>
 				<th scope="col">{{ "Name"|t }}</th>
 				<th scope="col">{{ "Handle"|t }}</th>
 				<td class="thin"></td>
@@ -38,6 +43,7 @@
 				{% for form in forms %}
 
 					<tr data-id="{{ form.id }}" data-name="{{ form.name|t }}">
+						<td class="thin">{{ form.id|t }}</td>
 						<th scope="row" data-title="{{ 'Name'|t }}"><a href="{{ url('applications/forms/' ~ form.id) }}">{{ form.name|t }}</a></th>
 						<td data-title="{{ 'Handle'|t }}"><code>{{ form.handle }}</code></td>
 						<td class="thin"><a class="delete icon" title="{{ 'Delete'|t }}" role="button"></a></td>
