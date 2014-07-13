@@ -2,7 +2,8 @@
 namespace Craft;
 
 /**
- * Applications service
+ * Class ApplicationsService
+ * @package Craft
  */
 class ApplicationsService extends BaseApplicationComponent
 {
@@ -17,12 +18,13 @@ class ApplicationsService extends BaseApplicationComponent
         return craft()->elements->getElementById($applicationId, 'Applications_Application');
     }
 
+
     /**
-     * Saves an application.
-     *
-     * @param Applications_ApplicationModel $event
-     * @throws Exception
+     * @param Applications_ApplicationModel $application
      * @return bool
+     * @throws Exception
+     * @throws \CDbException
+     * @throws \Exception
      */
     public function saveApplication(Applications_ApplicationModel $application)
     {
