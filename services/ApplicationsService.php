@@ -60,6 +60,12 @@ class ApplicationsService extends BaseApplicationComponent
             $transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
             try
             {
+                // Set a default status of pending, if one wasn't supplied.
+				if (!$application->status)
+				{
+					$application->status = ApplicationsApplicationStatus::Pending;
+				}
+
                 // Fire an 'onBeforeSaveApplication' event
                 $this->onBeforeSaveApplication(new Event($this, array(
                     'application'      => $application,
