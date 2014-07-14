@@ -36,11 +36,11 @@ class Applications_ApplicationRecord extends BaseRecord
             'status' => array(
                 AttributeType::Enum,
                 'values' => array(
-                    ApplicationsApplicationStatus::Approved,
-                    ApplicationsApplicationStatus::Denied,
-                    ApplicationsApplicationStatus::Pending
+                    ApplicationStatus::Approved,
+                    ApplicationStatus::Denied,
+                    ApplicationStatus::Pending
                 ),
-                'default' => ApplicationsApplicationStatus::Pending
+                'default' => ApplicationStatus::Pending
             ),
             'submitDate' => array(
                 AttributeType::DateTime,

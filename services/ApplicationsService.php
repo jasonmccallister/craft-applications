@@ -63,7 +63,7 @@ class ApplicationsService extends BaseApplicationComponent
                 // Set a default status of pending, if one wasn't supplied.
 				if (!$application->status)
 				{
-					$application->status = ApplicationsApplicationStatus::Pending;
+					$application->status = ApplicationStatus::Pending;
 				}
 
                 // Fire an 'onBeforeSaveApplication' event

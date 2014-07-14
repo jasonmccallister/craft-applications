@@ -33,11 +33,11 @@ class Applications_ApplicationModel extends BaseElementModel
                 'status' => array(
                     AttributeType::Enum,
                     'values' => array(
-                        ApplicationsApplicationStatus::Approved,
-                        ApplicationsApplicationStatus::Denied,
-                        ApplicationsApplicationStatus::Pending
+                        ApplicationStatus::Approved,
+                        ApplicationStatus::Denied,
+                        ApplicationStatus::Pending
                     ),
-                    'default' => ApplicationsApplicationStatus::Pending
+                    'default' => ApplicationStatus::Pending
                 ),
                 'submitDate'        => AttributeType::DateTime
             )
