@@ -1,7 +1,7 @@
 <?php
 namespace Craft;
 
-abstract class ApplicationStatus extends BaseEnum
+class ApplicationStatus
 {
 	const Approved = 'approved';
 	const Denied   = 'denied';
