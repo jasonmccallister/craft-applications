@@ -15,7 +15,7 @@ class Applications_ApplicationModel extends BaseElementModel
      */
     function __toString()
     {
-        return $this->name;
+        return $this->id;
     }
 
     /**
@@ -27,7 +27,8 @@ class Applications_ApplicationModel extends BaseElementModel
         return array_merge(
             parent::defineAttributes(), array(
                 'formId'            => AttributeType::Number,
-                'name'     => AttributeType::String,
+                'firstName'     => AttributeType::String,
+                'lastName'     => AttributeType::String,
                 'email'    => AttributeType::Email,
                 'phone'    => AttributeType::String,
                 'status' => array(
@@ -39,7 +40,7 @@ class Applications_ApplicationModel extends BaseElementModel
                     ),
                     'default' => ApplicationStatus::Pending
                 ),
-                'submitDate'        => AttributeType::DateTime
+                'submitDate' => AttributeType::DateTime
             )
         );
     }
