@@ -21,19 +21,19 @@ class Applications_ApplicationRecord extends BaseRecord
     protected function defineAttributes()
     {
         return array(
-            'applicantName' => array(
+            'name' => array(
                 AttributeType::String,
                 'required' => true
             ),
-            'applicantEmail' => array(
+            'email' => array(
                 AttributeType::Email,
                 'required' => true
             ),
-            'applicantPhone' => array(
+            'phone' => array(
                 AttributeType::String,
                 'required' => true
             ),
-            'applicationStatus' => array(
+            'status' => array(
                 AttributeType::Enum,
                 'values' => array(
                     ApplicationsApplicationStatus::Approved,
