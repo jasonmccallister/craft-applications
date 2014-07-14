@@ -98,7 +98,9 @@ class Applications_ApplicationElementType extends BaseElementType
     public function defineTableAttributes($source = null)
     {
         return array(
-            'name' => Craft::t('Applicant'),
+            'id' => Craft::t('Application ID'),
+            'firstName' => Craft::t('First Name'),
+            'lastName' => Craft::t('Last Name'),
             'email' => Craft::t('Email'),
             'phone' => Craft::t('Phone'),
             'submitDate' => Craft::t('Submit Date')
@@ -113,7 +115,8 @@ class Applications_ApplicationElementType extends BaseElementType
 	public function defineSearchableAttributes()
 	{
 		return array(
-            'name',
+            'firstName',
+            'lastName',
             'email',
             'phone',
             'submitDate'
@@ -131,19 +134,6 @@ class Applications_ApplicationElementType extends BaseElementType
     {
         switch ($attribute)
         {
-            case 'submitDate':
-            {
-                $date = $element->$attribute;
-
-                if ($date)
-                {
-                    return $date->localeDate();
-                }
-                else
-                {
-                    return '';
-                }
-            }
 
             case 'email':
 			{
@@ -158,6 +148,20 @@ class Applications_ApplicationElementType extends BaseElementType
 					return '';
 				}
 			}
+
+            case 'submitDate':
+            {
+                $date = $element->$attribute;
+
+                if ($date)
+                {
+                    return $date->localeDate();
+                }
+                else
+                {
+                    return '';
+                }
+            }
 
             default:
             {
@@ -174,9 +178,11 @@ class Applications_ApplicationElementType extends BaseElementType
     public function defineCriteriaAttributes()
     {
         return array(
+            'id' => AttributeType::Mixed,
             'form' => AttributeType::Mixed,
             'formId' => AttributeType::Mixed,
-            'name'     => AttributeType::String,
+            'firstName'     => AttributeType::String,
+            'lastName'     => AttributeType::String,
             'email'    => AttributeType::Email,
             'phone'    => AttributeType::String,
             'status' => array(
@@ -219,8 +225,8 @@ class Applications_ApplicationElementType extends BaseElementType
     {
         $query
             // you must add the columns here when adding a new field
-            ->addSelect('applications.formId, applications.name,
-            applications.email, applications.status,
+            ->addSelect('applications.formId, applications.firstName,
+            applications.lastName, applications.email, applications.status,
             applications.phone, applications.submitDate,')
             ->join('applications applications', 'applications.id = elements.id');
 
