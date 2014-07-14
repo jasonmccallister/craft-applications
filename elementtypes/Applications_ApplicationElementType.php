@@ -54,9 +54,9 @@ class Applications_ApplicationElementType extends BaseElementType
     public function getStatuses()
     {
         return array(
-            ApplicationsApplicationStatus::Approved => Craft::t('Approved'),
-            ApplicationsApplicationStatus::Denied   => Craft::t('Denied'),
-            ApplicationsApplicationStatus::Pending  => Craft::t('Pending'),
+            ApplicationStatus::Approved => Craft::t('Approved'),
+            ApplicationStatus::Denied   => Craft::t('Denied'),
+            ApplicationStatus::Pending  => Craft::t('Pending'),
         );
     }
 
@@ -182,11 +182,11 @@ class Applications_ApplicationElementType extends BaseElementType
             'status' => array(
                 AttributeType::Enum,
                 'values' => array(
-                    ApplicationsApplicationStatus::Approved,
-                    ApplicationsApplicationStatus::Denied,
-                    ApplicationsApplicationStatus::Pending
+                    ApplicationStatus::Approved,
+                    ApplicationStatus::Denied,
+                    ApplicationStatus::Pending
                 ),
-                'default' => ApplicationsApplicationStatus::Pending
+                'default' => ApplicationStatus::Pending
             ),
             'submitDate'       => AttributeType::Mixed,
             'order'            => array(
