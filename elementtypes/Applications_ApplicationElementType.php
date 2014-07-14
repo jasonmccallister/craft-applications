@@ -51,7 +51,6 @@ class Applications_ApplicationElementType extends BaseElementType
      *
      * @return array|null
      */
-    //  @TODO research creating an enum for the statuses
     public function getStatuses()
     {
         return array(
