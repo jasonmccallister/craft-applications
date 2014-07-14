@@ -1,0 +1,15 @@
+/* CUSTOM FIELDS */
+
+/* CUSTOM STATUSES */
+
+.status.approved {
+	background-position: 0 0;
+}
+
+.status.denied {
+	background-position: 0 -20px;
+}
+
+.status.pending {
+	background-position: 0 -30px;
+}
