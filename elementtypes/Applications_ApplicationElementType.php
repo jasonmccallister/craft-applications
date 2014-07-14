@@ -101,7 +101,6 @@ class Applications_ApplicationElementType extends BaseElementType
             'name' => Craft::t('Applicant'),
             'email' => Craft::t('Email'),
             'phone' => Craft::t('Phone'),
-            'status' => Craft::t('Status'),
             'submitDate' => Craft::t('Submit Date')
         );
     }
@@ -117,7 +116,6 @@ class Applications_ApplicationElementType extends BaseElementType
             'name',
             'email',
             'phone',
-            'status',
             'submitDate'
         );
 	}
@@ -147,6 +145,20 @@ class Applications_ApplicationElementType extends BaseElementType
                 }
             }
 
+            case 'email':
+			{
+				$email = $element->email;
+
+				if ($email)
+				{
+					return '<a href="mailto:'.$email.'">'.$email.'</a>';
+				}
+				else
+				{
+					return '';
+				}
+			}
+
             default:
             {
                 return parent::getTableAttributeHtml($element, $attribute);
@@ -162,8 +174,8 @@ class Applications_ApplicationElementType extends BaseElementType
     public function defineCriteriaAttributes()
     {
         return array(
-            'form'              => AttributeType::Mixed,
-            'formId'            => AttributeType::Mixed,
+            'form' => AttributeType::Mixed,
+            'formId' => AttributeType::Mixed,
             'name'     => AttributeType::String,
             'email'    => AttributeType::Email,
             'phone'    => AttributeType::String,
@@ -183,6 +195,18 @@ class Applications_ApplicationElementType extends BaseElementType
             ),
         );
     }
+
+    /**
+	 * Returns the element query condition for a custom status criteria.
+	 *
+	 * @param DbCommand $query
+	 * @param string $status
+	 * @return string|false
+	 */
+	public function getElementQueryStatusCondition(DbCommand $query, $status)
+	{
+		return 'applications.status = "'.$status.'"';
+	}
 
     /**
      * Modifies an element query targeting elements of this type.
