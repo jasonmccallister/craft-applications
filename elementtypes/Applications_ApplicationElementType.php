@@ -178,14 +178,14 @@ class Applications_ApplicationElementType extends BaseElementType
     public function defineCriteriaAttributes()
     {
         return array(
-            'id' => AttributeType::Mixed,
-            'form' => AttributeType::Mixed,
-            'formId' => AttributeType::Mixed,
-            'firstName'     => AttributeType::String,
-            'lastName'     => AttributeType::String,
-            'email'    => AttributeType::Email,
-            'phone'    => AttributeType::String,
-            'status' => array(
+            'id'         => AttributeType::Mixed,
+            'form'       => AttributeType::Mixed,
+            'formId'     => AttributeType::Mixed,
+            'firstName'  => AttributeType::String,
+            'lastName'   => AttributeType::String,
+            'email'      => AttributeType::Email,
+            'phone'      => AttributeType::String,
+            'status'     => array(
                 AttributeType::Enum,
                 'values' => array(
                     ApplicationStatus::Approved,
@@ -194,8 +194,8 @@ class Applications_ApplicationElementType extends BaseElementType
                 ),
                 'default' => ApplicationStatus::Pending
             ),
-            'submitDate'       => AttributeType::Mixed,
-            'order'            => array(
+            'submitDate'  => AttributeType::Mixed,
+            'order'       => array(
                 AttributeType::String,
                 'default' => 'applications.submitDate asc'
             ),
