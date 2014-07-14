@@ -2,7 +2,7 @@
 namespace Craft;
 
 // include enums for custom statuses
-include(dirname(__FILE__) . '/enums/ApplicationsApplicationStatus.php');
+include(dirname(__FILE__) . '/enums/ApplicationStatus.php');
 
 /**
  * Applications by Jason McCallister

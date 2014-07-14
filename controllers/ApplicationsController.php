@@ -156,18 +156,20 @@ class ApplicationsController extends BaseController
         else
         {
             $application = new Applications_ApplicationModel();
+
+            // TODO: use or remove, isloate the issue with creating new
+            // applications from the submission
+            // $application->status = ApplicationsApplicationStatus::Pending;
         }
 
         // Set the application attributes, defaulting to the existing values for whatever is missing from the post data
-        $application->formId            = craft()->request->getPost('formId', $application->formId);
-        $application->name     = craft()->request->getPost('name');
-        $application->email    = craft()->request->getPost('email');
-        $application->phone    = craft()->request->getPost('phone');
-        $application->status = craft()->request->getPost('status');
-        $application->submitDate        = (($submitDate = craft()->request->getPost('submitDate')) ? DateTime::createFromString($submitDate, craft()->timezone) : null);
+        $application->formId     = craft()->request->getPost('formId', $application->formId);
+        $application->name       = craft()->request->getPost('name');
+        $application->email      = craft()->request->getPost('email');
+        $application->phone      = craft()->request->getPost('phone');
+        $application->status     = craft()->request->getPost('status');
+        $application->submitDate = (($submitDate = craft()->request->getPost('submitDate')) ? DateTime::createFromString($submitDate, craft()->timezone) : null);
 
-        // @TODO validate removing this as titles are no longer
-        // $application->getContent()->title = craft()->request->getPost('title', $application->title);
         $application->setContentFromPost('fields');
 
         if (craft()->applications->saveApplication($application))
