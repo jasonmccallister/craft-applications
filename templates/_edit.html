@@ -3,9 +3,9 @@
 
 {# @TODO remove this soon as it doesnt work #}
 {% set applicationStatuses = {
-    'Approved': 'Approved'|t,
-    'Denied': 'Denied'|t,
-    'Pending': 'Pending'|t
+    'Approved': 'approved'|t,
+    'Denied': 'denied'|t,
+    'Pending': 'pending'|t
 } %}
 
 {% set formHandle = form.handle %}
@@ -26,11 +26,11 @@
         <div class="left" style="width: 40%;">
             {{ forms.textField({
                 label: "Applicants Name"|t,
-                id: 'applicantName',
-                name: 'applicantName',
+                id: 'name',
+                name: 'name',
                 instructions: "First and last name (i.e John Doe)",
-                value: application.applicantName,
-                errors: application.getErrors('applicantName'),
+                value: application.name,
+                errors: application.getErrors('name'),
                 first: true,
                 autofocus: true,
                 required: true
@@ -40,11 +40,11 @@
         <div class="right" style="width: 50%">
             {{ forms.textField({
                 label: "Applicants Email"|t,
-                id: 'applicantEmail',
-                name: 'applicantEmail',
+                id: 'email',
+                name: 'email',
                 instructions: "Applicants email address, notifications will be sent to this email",
-                value: application.applicantEmail,
-                errors: application.getErrors('applicantEmail'),
+                value: application.email,
+                errors: application.getErrors('email'),
                 required: true
             }) }}
         </div>
@@ -53,11 +53,11 @@
         <div class="left" style="width: 40%; margin-top: 21px">
             {{ forms.textField({
                 label: "Phone Number"|t,
-                id: 'applicantPhone',
-                name: 'applicantPhone',
+                id: 'phone',
+                name: 'phone',
                 instructions: "Applicants phone number",
-                value: application.applicantPhone,
-                errors: application.getErrors('applicantPhone'),
+                value: application.phone,
+                errors: application.getErrors('phone'),
                 required: true
             }) }}
         </div>
@@ -79,11 +79,11 @@
 
         {{ forms.selectField({
             label: "Application Status"|t,
-            id: 'application.applicationStatus',
-            name: 'application.applicationStatus',
+            id: 'application.status',
+            name: 'application.status',
 			instructions: "Current status of the application",
             options: applicationStatuses,
-            value: application.applicationStatus,
+            value: application.status,
         }) }}
 
         <hr>
