@@ -46,7 +46,8 @@ class ApplicationsService extends BaseApplicationComponent
         }
 
         $applicationRecord->formId     = $application->formId;
-        $applicationRecord->name       = $application->name;
+        $applicationRecord->firstName  = $application->firstName;
+        $applicationRecord->lastName   = $application->lastName;
         $applicationRecord->email      = $application->email;
         $applicationRecord->phone      = $application->phone;
         $applicationRecord->status     = $application->status;
