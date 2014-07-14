@@ -50,7 +50,8 @@ class ApplicationsService extends BaseApplicationComponent
         $applicationRecord->lastName   = $application->lastName;
         $applicationRecord->email      = $application->email;
         $applicationRecord->phone      = $application->phone;
-        $applicationRecord->status     = $application->status;
+        // @TODO uncomment when you determine how to add enums to dropdown
+        // $applicationRecord->status     = $application->status;
         $applicationRecord->submitDate = $application->submitDate;
 
         $applicationRecord->validate();
