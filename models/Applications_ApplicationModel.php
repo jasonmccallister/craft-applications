@@ -19,6 +19,16 @@ class Applications_ApplicationModel extends BaseElementModel
     }
 
     /**
+     * Use the element's custom statuses
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
      * @access protected
      * @return array
      */
