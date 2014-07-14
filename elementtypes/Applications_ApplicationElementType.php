@@ -70,7 +70,7 @@ class Applications_ApplicationElementType extends BaseElementType
     {
         $sources = array(
             '*' => array(
-                'label' => Craft::t('All applications'),
+                'label' => Craft::t('All Applications'),
             )
         );
 
@@ -98,11 +98,11 @@ class Applications_ApplicationElementType extends BaseElementType
     public function defineTableAttributes($source = null)
     {
         return array(
-            'applicantName' => Craft::t('Applicant'),
-            'applicantEmail' => Craft::t('Email'),
-            'applicantPhone' => Craft::t('Phone'),
-            // 'applicationStatus' => Craft::t('Status'),
-            'submitDate' => Craft::t('Submit Date'),
+            'name' => Craft::t('Applicant'),
+            'email' => Craft::t('Email'),
+            'phone' => Craft::t('Phone'),
+            'status' => Craft::t('Status'),
+            'submitDate' => Craft::t('Submit Date')
         );
     }
 
@@ -114,10 +114,10 @@ class Applications_ApplicationElementType extends BaseElementType
 	public function defineSearchableAttributes()
 	{
 		return array(
-            'applicantName',
-            'applicantEmail',
-            'applicantPhone',
-            'applicationStatus',
+            'name',
+            'email',
+            'phone',
+            'status',
             'submitDate'
         );
 	}
@@ -164,10 +164,10 @@ class Applications_ApplicationElementType extends BaseElementType
         return array(
             'form'              => AttributeType::Mixed,
             'formId'            => AttributeType::Mixed,
-            'applicantName'     => AttributeType::String,
-            'applicantEmail'    => AttributeType::Email,
-            'applicantPhone'    => AttributeType::String,
-            'applicationStatus' => array(
+            'name'     => AttributeType::String,
+            'email'    => AttributeType::Email,
+            'phone'    => AttributeType::String,
+            'status' => array(
                 AttributeType::Enum,
                 'values' => array(
                     ApplicationsApplicationStatus::Approved,
@@ -195,9 +195,9 @@ class Applications_ApplicationElementType extends BaseElementType
     {
         $query
             // you must add the columns here when adding a new field
-            ->addSelect('applications.formId, applications.applicantName,
-            applications.applicantEmail, applications.applicationStatus,
-            applications.applicantPhone, applications.submitDate,')
+            ->addSelect('applications.formId, applications.name,
+            applications.email, applications.status,
+            applications.phone, applications.submitDate,')
             ->join('applications applications', 'applications.id = elements.id');
 
         if ($criteria->formId)
