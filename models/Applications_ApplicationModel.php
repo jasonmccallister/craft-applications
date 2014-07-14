@@ -15,7 +15,7 @@ class Applications_ApplicationModel extends BaseElementModel
      */
     function __toString()
     {
-        return $this->applicantName;
+        return $this->name;
     }
 
     /**
@@ -27,10 +27,10 @@ class Applications_ApplicationModel extends BaseElementModel
         return array_merge(
             parent::defineAttributes(), array(
                 'formId'            => AttributeType::Number,
-                'applicantName'     => AttributeType::String,
-                'applicantEmail'    => AttributeType::Email,
-                'applicantPhone'    => AttributeType::String,
-                'applicationStatus' => array(
+                'name'     => AttributeType::String,
+                'email'    => AttributeType::Email,
+                'phone'    => AttributeType::String,
+                'status' => array(
                     AttributeType::Enum,
                     'values' => array(
                         ApplicationsApplicationStatus::Approved,
