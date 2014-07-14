@@ -11,20 +11,20 @@ class ApplicationsController extends BaseController
      * @var Allows anonymous access to this controller's actions.
      * @access protected
      */
-    protected $allowAnonymous = array('actionpublicSubmission');
+    protected $allowAnonymous = array('actionPublicSubmission');
 
-    // public function actionPublicSubmission()
-    // {
-    //     // require post request
-    //     $this->requirePostRequest();
-    //
-    //     // grab settings for later use
-    //     $settings = craft()->plugins->getPlugin('applications')->getSettings();
-    //
-    //     // set the formId from post
-    //     $formId = craft()->request->getPost('formId');
-    //
-    // }
+    public function actionPublicSubmission()
+    {
+        // require post request
+        $this->requirePostRequest();
+
+        // grab settings for later use
+        $settings = craft()->plugins->getPlugin('applications')->getSettings();
+
+        // set the formId from post
+        $formId = craft()->request->getPost('formId');
+
+    }
 
     /**
      * Application index
