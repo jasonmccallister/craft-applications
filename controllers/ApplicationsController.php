@@ -11,7 +11,7 @@ class ApplicationsController extends BaseController
      * @var Allows anonymous access to this controller's actions.
      * @access protected
      */
-    protected $allowAnonymous = true;
+    protected $allowAnonymous = array('actionpublicSubmission');
 
     // public function actionPublicSubmission()
     // {
