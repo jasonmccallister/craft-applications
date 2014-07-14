@@ -11,7 +11,8 @@ class ApplicationsController extends BaseController
      * @var Allows anonymous access to this controller's actions.
      * @access protected
      */
-    protected $allowAnonymous = array('actionPublicSubmission');
+    // protected $allowAnonymous = array('actionPublicSubmission');
+    protected $allowAnonymous = true;
 
     public function actionPublicSubmission()
     {
@@ -128,6 +129,14 @@ class ApplicationsController extends BaseController
         // Set the "Continue Editing" URL
         $variables['continueEditingUrl'] = 'applications/'.$variables['form']->handle.'/{id}';
 
+        // TODO: make this pull from the enum or the db records...
+        // Set a list of the variables to use in the dropdown.
+        // $variables['statusOptions'] = array(
+        //     'Active',
+        //     'Pending',
+        //     'Denied'
+        // );
+
         // Render the template!
         $this->renderTemplate('applications/_edit', $variables);
     }
@@ -156,15 +165,12 @@ class ApplicationsController extends BaseController
         else
         {
             $application = new Applications_ApplicationModel();
-
-            // TODO: use or remove, isloate the issue with creating new
-            // applications from the submission
-            // $application->status = ApplicationsApplicationStatus::Pending;
         }
 
         // Set the application attributes, defaulting to the existing values for whatever is missing from the post data
         $application->formId     = craft()->request->getPost('formId', $application->formId);
-        $application->name       = craft()->request->getPost('name');
+        $application->firstName       = craft()->request->getPost('firstName');
+        $application->lastName       = craft()->request->getPost('lastName');
         $application->email      = craft()->request->getPost('email');
         $application->phone      = craft()->request->getPost('phone');
         $application->status     = craft()->request->getPost('status');
