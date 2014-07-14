@@ -1,9 +1,9 @@
 <?php
 namespace Craft;
 
-class ApplicationsApplicationStatus
+abstract class ApplicationsApplicationStatus extends BaseEnum
 {
-	const Pending  = 'pending';
 	const Approved = 'approved';
 	const Denied   = 'denied';
+	const Pending  = 'pending';
 }
