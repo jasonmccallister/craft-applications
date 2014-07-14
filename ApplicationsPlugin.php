@@ -5,7 +5,12 @@ namespace Craft;
 include(dirname(__FILE__) . '/enums/ApplicationsApplicationStatus.php');
 
 /**
- * Application plugin class
+ * Applications by Jason McCallister
+ *
+ * @package   Application
+ * @author    Jason McCallister
+ * @copyright Copyright (c) 2014, Jason McCallister
+ * @link      http://themccallister.com
  */
 class ApplicationsPlugin extends BasePlugin
 {
