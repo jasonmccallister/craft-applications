@@ -1,0 +1,36 @@
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+{% set title = 'New Application' %}
+
+{% set formHandle = form.handle %}
+
+{% block content %}
+
+<form id="application-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
+    <input type="hidden" name="action" value="applications/save">
+    <input type="hidden" name="redirect" value="applications">
+    <input type="hidden" name="formId" value="{{ form.id }}">
+    {% if craft.isLocalized() %}
+    <input type="hidden" name="locale" value="{{ application.locale }}">
+    {% endif %}
+
+    {% include 'applications/_partials/required-fields' %}
+
+    <hr>
+
+    <div>
+        {% for tab in form.getFieldLayout().getTabs() %}
+        <div id="tab{{ loop.index }}"{% if not loop.first %} class="hidden"{% endif %}>
+        {% include "_includes/fields" with {
+        fields: tab.getFields(),
+        element: application
+        } only %}
+    </div>
+    {% endfor %}
+    </div>
+
+    <hr>
+
+    {% include 'applications/_partials/buttons' %}
+</form>
+{% endblock %}
