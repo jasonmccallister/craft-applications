@@ -21,10 +21,10 @@ class Applications_FormRecord extends BaseRecord
     protected function defineAttributes()
     {
         return array(
-            'name'          => array(
+            'name' => array(
                 AttributeType::Name, 'required' => true
             ),
-            'handle'        => array(
+            'handle' => array(
                 AttributeType::Handle, 'required' => true
             ),
             'fieldLayoutId' => AttributeType::Number,
