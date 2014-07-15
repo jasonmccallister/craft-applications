@@ -18,7 +18,6 @@ class ApplicationsService extends BaseApplicationComponent
         return craft()->elements->getElementById($applicationId, 'Applications_Application');
     }
 
-
     /**
      * @param Applications_ApplicationModel $application
      * @return bool
@@ -50,8 +49,6 @@ class ApplicationsService extends BaseApplicationComponent
         $applicationRecord->lastName   = $application->lastName;
         $applicationRecord->email      = $application->email;
         $applicationRecord->phone      = $application->phone;
-        // @TODO uncomment when you determine how to add enums to dropdown
-        $applicationRecord->status     = $application->status;
         $applicationRecord->submitDate = $application->submitDate;
 
         $applicationRecord->validate();
@@ -62,11 +59,6 @@ class ApplicationsService extends BaseApplicationComponent
             $transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
             try
             {
-                // Set a default status of pending, if one wasn't supplied.
-				if (!$application->status)
-				{
-					$application->status = ApplicationStatus::Pending;
-				}
 
                 // Fire an 'onBeforeSaveApplication' event
                 $this->onBeforeSave(new Event($this, array(
