@@ -9,7 +9,7 @@ class Applications_FormsController extends BaseController
     /**
      * Form index
      */
-    public function actionFormIndex()
+    public function actionIndex()
     {
         $variables['forms'] = craft()->applications_forms->getAllForms();
 
@@ -23,7 +23,7 @@ class Applications_FormsController extends BaseController
      * @throws HttpException
      * @throws Exception
      */
-    public function actionEditForm(array $variables = array())
+    public function actionEdit(array $variables = array())
     {
         $variables['brandNewForm'] = false;
 
