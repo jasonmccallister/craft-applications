@@ -1,0 +1,64 @@
+<div class="left" style="width: 40%;">
+	{{ forms.textField({
+		label: "First Name"|t,
+		id: 'firstName',
+		name: 'firstName',
+		instructions: "First name (i.e John)",
+		placeholder: "John",
+		value: application.firstName,
+		errors: application.getErrors('firstName'),
+		first: true,
+		autofocus: true,
+		required: true
+	}) }}
+</div>
+<div class="right" style="width: 50%">
+	{{ forms.textField({
+		label: "Last Name"|t,
+		id: 'lastName',
+		name: 'lastName',
+		instructions: "Last name (i.e Doe)",
+		placeholder: "Doe",
+		value: application.lastName,
+		errors: application.getErrors('lastName'),
+		required: true
+	}) }}
+</div>
+<div class="clear"></div>
+<div class="left" style="width: 40%; margin-top: 21px">
+	{{ forms.textField({
+		label: "Email Address"|t,
+		id: 'email',
+		name: 'email',
+		instructions: "Applicants email address, notifications will be sent to this email",
+		placeholder: "john.doe@gmail.com",
+		value: application.email,
+		errors: application.getErrors('email'),
+		required: true
+	}) }}
+</div>
+<div class="right" style="width: 50%; margin-top: 21px">
+	{{ forms.textField({
+		label: "Phone Number"|t,
+		id: 'phone',
+		name: 'phone',
+		instructions: "Applicants phone number",
+		placeholder: "555-555-5555",
+		value: application.phone,
+		errors: application.getErrors('phone'),
+		required: true
+	}) }}
+</div>
+<div class="clear"></div>
+<div class="left" style="width: 40%; margin-top: 21px">
+	{{ forms.dateField({
+		label: "Submit Date"|t,
+		id: 'submitDate',
+		name: 'submitDate',
+		instructions: "Submission date of the application",
+		value: application.submitDate,
+		errors: application.getErrors('submitDate'),
+		required: true
+	}) }}
+</div>
+<div class="clear"></div>
