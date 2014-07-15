@@ -1,6 +1,9 @@
 <?php
 namespace Craft;
 
+// include enums for custom statuses
+include(dirname(__FILE__) . '/enums/ApplicationStatus.php');
+
 /**
  * Applications by Jason McCallister
  *
@@ -11,10 +14,6 @@ namespace Craft;
  */
 class ApplicationsPlugin extends BasePlugin
 {
-    public function init()
-    {
-        Craft::import('plugins.applications.enums.ApplicationStatus');
-    }
 
     /**
      * @return string
@@ -107,7 +106,7 @@ class ApplicationsPlugin extends BasePlugin
             ),
             'applications/(?P<formHandle>{handle})/(?P<applicationId>\d+)' => array(
                 'action' => 'applications/edit'
-            ),
+            )
         );
     }
 }
