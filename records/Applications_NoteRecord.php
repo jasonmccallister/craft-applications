@@ -15,10 +15,6 @@ class Applications_NoteRecord extends BaseRecord
                 AttributeType::Name,
                 'required' => true
             ),
-			'noteDate' => array(
-                AttributeType::DateTime,
-                'required' => true
-            ),
 			'comment' => array(
                 AttributeType::String,
                 'required' => true
@@ -35,13 +31,11 @@ class Applications_NoteRecord extends BaseRecord
         // applications
         return array(
             'applications' => array(
-                static::HAS_MANY,
+                static::BELONGS_TO,
                 'Applications_ApplicationRecord',
-                'id',
                 'required' => true,
                 'onDelete' => static::CASCADE
             ),
         );
     }
-
 }
