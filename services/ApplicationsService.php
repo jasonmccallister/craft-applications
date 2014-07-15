@@ -26,7 +26,7 @@ class ApplicationsService extends BaseApplicationComponent
      * @throws \CDbException
      * @throws \Exception
      */
-    public function saveApplication(Applications_ApplicationModel $application)
+    public function save(Applications_ApplicationModel $application)
     {
         $isNewApplication = !$application->id;
 
@@ -51,7 +51,7 @@ class ApplicationsService extends BaseApplicationComponent
         $applicationRecord->email      = $application->email;
         $applicationRecord->phone      = $application->phone;
         // @TODO uncomment when you determine how to add enums to dropdown
-        // $applicationRecord->status     = $application->status;
+        $applicationRecord->status     = $application->status;
         $applicationRecord->submitDate = $application->submitDate;
 
         $applicationRecord->validate();
@@ -69,7 +69,7 @@ class ApplicationsService extends BaseApplicationComponent
 				}
 
                 // Fire an 'onBeforeSaveApplication' event
-                $this->onBeforeSaveApplication(new Event($this, array(
+                $this->onBeforeSave(new Event($this, array(
                     'application'      => $application,
                     'isNewApplication' => $isNewApplication
                 )));
@@ -85,7 +85,7 @@ class ApplicationsService extends BaseApplicationComponent
                     $applicationRecord->save(false);
 
                     // Fire an 'onSaveEvent' event
-                    $this->onSaveApplication(new Event($this, array(
+                    $this->onSave(new Event($this, array(
                         'application'      => $application,
                         'isNewApplication' => $isNewApplication
                     )));
@@ -119,9 +119,9 @@ class ApplicationsService extends BaseApplicationComponent
      *
      * @param Event $event
      */
-    public function onBeforeSaveApplication(Event $event)
+    public function onBeforeSave(Event $event)
     {
-        $this->raiseEvent('onBeforeSaveApplication', $event);
+        $this->raiseEvent('onBeforeSave', $event);
     }
 
     /**
@@ -129,8 +129,8 @@ class ApplicationsService extends BaseApplicationComponent
      *
      * @param Event $event
      */
-    public function onSaveApplication(Event $event)
+    public function onSave(Event $event)
     {
-        $this->raiseEvent('onSaveApplication', $event);
+        $this->raiseEvent('onSave', $event);
     }
 }
