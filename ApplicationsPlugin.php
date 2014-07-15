@@ -91,22 +91,22 @@ class ApplicationsPlugin extends BasePlugin
     {
         return array(
             'applications/forms' => array(
-                'action' => 'applications/forms/formIndex'
+                'action' => 'applications/forms/index'
             ),
             'applications/forms/new' => array(
-                'action' => 'applications/forms/editForm'
+                'action' => 'applications/forms/edit'
             ),
             'applications/forms/(?P<formId>\d+)' => array(
-                'action' => 'applications/forms/editForm'
+                'action' => 'applications/forms/edit'
             ),
             'applications' => array(
-                'action' => 'applications/applicationIndex'
+                'action' => 'applications/index'
             ),
             'applications/(?P<formHandle>{handle})/new' => array(
-                'action' => 'applications/editApplication'
+                'action' => 'applications/new'
             ),
             'applications/(?P<formHandle>{handle})/(?P<applicationId>\d+)' => array(
-                'action' => 'applications/editApplication'
+                'action' => 'applications/edit'
             ),
         );
     }
