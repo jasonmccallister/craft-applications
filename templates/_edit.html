@@ -1,12 +1,14 @@
 {% extends "_layouts/cp" %}
 {% import "_includes/forms" as forms %}
 
+{% set title = 'Application for ' ~ application.firstName ~ ' ' ~ application.lastName %}
+
 {% set formHandle = form.handle %}
 
 {% block content %}
 
     <form id="application-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
-        <input type="hidden" name="action" value="applications/saveApplication">
+        <input type="hidden" name="action" value="applications/save">
         <input type="hidden" name="redirect" value="applications">
         <input type="hidden" name="formId" value="{{ form.id }}">
         {% if application.id %}
@@ -16,118 +18,23 @@
             <input type="hidden" name="locale" value="{{ application.locale }}">
         {% endif %}
 
-        <div class="left" style="width: 40%;">
-            {{ forms.textField({
-                label: "First Name"|t,
-                id: 'firstName',
-                name: 'firstName',
-                instructions: "First name (i.e John)",
-                placeholder: "John",
-                value: application.firstName,
-                errors: application.getErrors('firstName'),
-                first: true,
-                autofocus: true,
-                required: true
-            }) }}
-        </div>
+        {% include 'applications/_partials/required-fields' %}
 
-        <div class="right" style="width: 50%">
-            {{ forms.textField({
-                label: "Last Name"|t,
-                id: 'lastName',
-                name: 'lastName',
-                instructions: "Last name (i.e Doe)",
-                placeholder: "Doe",
-                value: application.lastName,
-                errors: application.getErrors('lastName'),
-                required: true
-            }) }}
-        </div>
-        <div class="clear"></div>
-
-        <div class="left" style="width: 40%; margin-top: 21px">
-            {{ forms.textField({
-                label: "Applicants Email"|t,
-                id: 'email',
-                name: 'email',
-                instructions: "Applicants email address, notifications will be sent to this email",
-                placeholder: "john.doe@gmail.com",
-                value: application.email,
-                errors: application.getErrors('email'),
-                required: true
-            }) }}
-        </div>
-
-
-        <div class="right" style="width: 50%; margin-top: 21px">
-            {{ forms.textField({
-                label: "Phone Number"|t,
-                id: 'phone',
-                name: 'phone',
-                instructions: "Applicants phone number",
-                placeholder: "555-555-5555",
-                value: application.phone,
-                errors: application.getErrors('phone'),
-                required: true
-            }) }}
-        </div>
-        <div class="clear"></div>
-
-        <div class="left" style="width: 40%; margin-top: 21px">
-            {{ forms.dateField({
-                label: "Submit Date"|t,
-                id: 'submitDate',
-                name: 'submitDate',
-                instructions: "Submission date of the application",
-                value: application.submitDate,
-                errors: application.getErrors('submitDate'),
-                required: true
-            }) }}
-        </div>
-
-        <div class="right" style="width: 50%; margin-top: 21px">
-            {{ forms.selectField({
-    			label: "Application Status"|t,
-    			id: 'status',
-    			name: 'status',
-                instructions: "Change the application status here",
-    			value: application.status,
-    			options: customStatuses
-    		}) }}
-        </div>
-        <div class="clear"></div>
         <hr>
 
-
         <div>
-            {% for tab in form.getFieldLayout().getTabs() %}
-                <div id="tab{{ loop.index }}"{% if not loop.first %} class="hidden"{% endif %}>
-                    {% include "_includes/fields" with {
-                        fields: tab.getFields(),
-                        element: application
-                    } only %}
-                </div>
-            {% endfor %}
-        </div>
-
-        {# <hr> #}
-
-        <div class="buttons">
-            <div class="btngroup submit first">
-                <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
-
-                <div class="btn submit menubtn"></div>
-                <div class="menu">
-                    <ul>
-                        <li><a class="formsubmit" data-redirect="{{ continueEditingUrl }}">{{ "Save and continue editing"|t }}</a></li>
-                        <li><a class="formsubmit" data-redirect="applications/{{ formHandle }}/new">{{ "Save and add another"|t }}</a></li>
-                    </ul>
-                </div>
+        {% for tab in form.getFieldLayout().getTabs() %}
+            <div id="tab{{ loop.index }}"{% if not loop.first %} class="hidden"{% endif %}>
+                {% include "_includes/fields" with {
+                    fields: tab.getFields(),
+                    element: application
+                } only %}
             </div>
-
-            <input type="button" class="btn formsubmit" value="{{ 'Delete'|t }}" data-action="applications/deleteApplication"
-                data-confirm="{{ 'Are you sure you want to delete this application?'|t }}"
-                data-redirect="applications">
+        {% endfor %}
         </div>
+
+        <hr>
+
+        {% include 'applications/_partials/buttons' %}
     </form>
 {% endblock %}
