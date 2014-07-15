@@ -1,13 +1,6 @@
 {% extends "_layouts/cp" %}
 {% import "_includes/forms" as forms %}
 
-{# @TODO remove this soon as it doesnt work #}
-{% set applicationStatuses = {
-    'Approved': 'Approved'|t,
-    'Denied': 'Denied'|t,
-    'Pending': 'Pending'|t
-} %}
-
 {% set formHandle = form.handle %}
 
 {% block content %}
@@ -93,7 +86,14 @@
         </div>
 
         <div class="right" style="width: 50%; margin-top: 21px">
-            // ADD STATUS
+            {{ forms.selectField({
+    			label: "Application Status"|t,
+    			id: 'status',
+    			name: 'status',
+                instructions: "Change the application status here",
+    			value: application.status,
+    			options: customStatuses
+    		}) }}
         </div>
         <div class="clear"></div>
         <hr>
