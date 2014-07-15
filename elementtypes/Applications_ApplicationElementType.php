@@ -98,11 +98,11 @@ class Applications_ApplicationElementType extends BaseElementType
     public function defineTableAttributes($source = null)
     {
         return array(
-            'id' => Craft::t('Application ID'),
-            'firstName' => Craft::t('First Name'),
-            'lastName' => Craft::t('Last Name'),
-            'email' => Craft::t('Email'),
-            'phone' => Craft::t('Phone'),
+            'id'         => Craft::t('Application ID'),
+            'firstName'  => Craft::t('First Name'),
+            'lastName'   => Craft::t('Last Name'),
+            'email'      => Craft::t('Email'),
+            'phone'      => Craft::t('Phone'),
             'submitDate' => Craft::t('Submit Date')
         );
     }
