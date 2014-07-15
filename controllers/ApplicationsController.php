@@ -231,9 +231,28 @@ class ApplicationsController extends BaseController
      */
     public function actionApprove()
     {
+        // @TODO example approve workflow, define the query here later
         $this->requirePostRequest();
 
         $applicationId = craft()->request->getRequiredPost('applicationId');
+        $firstName = craft()->request->getRequiredPost('firstName');
+        $lastName = craft()->request->getRequiredPost('lastName');
+
+        if ($applicationId != null) {
+
+            // query table where applicationId equals applicationId
+            // change application.status to ApplicationStatus::Approved
+
+            // notify the user that the application was approved
+            craft()->userSession->setNotice(Craft::t('Application for ' . $firstName . ' ' . $lastName . ' was approved!'));
+
+            // redirect to posted url - based on the form
+            // $this->redirectToPostedUrl();
+
+            // TODO: remove dev testing
+            // var_dump($applicationId);
+            // die('app id was not null');
+        }
     }
 
     /**
