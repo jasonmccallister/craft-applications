@@ -57,6 +57,33 @@ class ApplicationsController extends BaseController
             }
         }
 
+        // Tabs
+        $variables['tabs'] = array();
+
+        foreach ($variables['form']->getFieldLayout()->getTabs() as $index => $tab)
+        {
+            // Do any of the fields on this tab have errors?
+            $hasErrors = false;
+
+            if ($variables['application']->hasErrors())
+            {
+                foreach ($tab->getFields() as $field)
+                {
+                    if ($variables['application']->getErrors($field->getField()->handle))
+                    {
+                        $hasErrors = true;
+                        break;
+                    }
+                }
+            }
+
+            $variables['tabs'][] = array(
+                'label' => $tab->name,
+                'url'   => '#tab'.($index+1),
+                'class' => ($hasErrors ? 'error' : null)
+            );
+        }
+
         // Set the "Continue Editing" URL
         $variables['continueEditingUrl'] = 'applications/'.$variables['form']->handle.'/{id}';
 

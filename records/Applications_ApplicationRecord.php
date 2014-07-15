@@ -66,7 +66,7 @@ class Applications_ApplicationRecord extends BaseRecord
                 'required' => true,
                 'onDelete' => static::CASCADE
             ),
-            'form'    => array(
+            'form' => array(
                 static::BELONGS_TO,
                 'Applications_FormRecord',
                 'required' => true,

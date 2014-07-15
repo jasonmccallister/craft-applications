@@ -1,0 +1,10 @@
+<div>
+{% for tab in form.getFieldLayout().getTabs() %}
+	<div id="tab{{ loop.index }}"{% if not loop.first %} class="hidden"{% endif %}>
+		{% include "_includes/fields" with {
+			fields: tab.getFields(),
+			element: application
+		} only %}
+	</div>
+{% endfor %}
+</div>
