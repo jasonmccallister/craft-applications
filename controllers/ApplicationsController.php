@@ -11,30 +11,63 @@ class ApplicationsController extends BaseController
      * @var Allows anonymous access to this controller's actions.
      * @access protected
      */
-    // protected $allowAnonymous = array('actionPublicSubmission');
-    protected $allowAnonymous = true;
-
-    public function actionPublicSubmission()
-    {
-        // require post request
-        $this->requirePostRequest();
-
-        // grab settings for later use
-        $settings = craft()->plugins->getPlugin('applications')->getSettings();
-
-        // set the formId from post
-        $formId = craft()->request->getPost('formId');
-
-    }
+    protected $allowAnonymous = array('actionSave');
 
     /**
-     * Application index
+     * Render the application index
      */
-    public function actionApplicationIndex()
+    public function actionIndex()
     {
         $variables['forms'] = craft()->applications_forms->getAllForms();
 
         $this->renderTemplate('applications/_index', $variables);
+    }
+
+    /**
+     * Render a application form
+     */
+    public function actionNew(array $variables = array())
+    {
+
+        if (!empty($variables['formHandle']))
+        {
+            $variables['form'] = craft()->applications_forms->getFormByHandle($variables['formHandle']);
+        }
+        else if (!empty($variables['formId']))
+        {
+            $variables['form'] = craft()->applications_forms->getFormById($variables['formId']);
+        }
+
+        // Now let's set up the actual application
+        if (empty($variables['application']))
+        {
+            if (!empty($variables['applicationId']))
+            {
+                $variables['application'] = craft()->applications->getApplicationById($variables['applicationId']);
+
+                if (!$variables['application'])
+                {
+                    throw new HttpException(404);
+                }
+            }
+            else
+            {
+                $variables['application'] = new Applications_ApplicationModel();
+                $variables['application']->formId = $variables['form']->id;
+            }
+        }
+
+        // Set the "Continue Editing" URL
+        $variables['continueEditingUrl'] = 'applications/'.$variables['form']->handle.'/{id}';
+
+        // Set a list of the variables to use in the select dropdown.
+        $variables['customStatuses'] = array(
+            ApplicationStatus::Approved => 'approved',
+            ApplicationStatus::Denied   => 'denied',
+            ApplicationStatus::Pending  => 'pending',
+        );
+
+        $this->renderTemplate('applications/_new', $variables);
     }
 
     /**
@@ -43,7 +76,7 @@ class ApplicationsController extends BaseController
      * @param array $variables
      * @throws HttpException
      */
-    public function actionEditApplication(array $variables = array())
+    public function actionEdit(array $variables = array())
     {
         if (!empty($variables['formHandle']))
         {
@@ -129,13 +162,12 @@ class ApplicationsController extends BaseController
         // Set the "Continue Editing" URL
         $variables['continueEditingUrl'] = 'applications/'.$variables['form']->handle.'/{id}';
 
-        // TODO: make this pull from the enum or the db records...
-        // Set a list of the variables to use in the dropdown.
-        // $variables['statusOptions'] = array(
-        //     'Active',
-        //     'Pending',
-        //     'Denied'
-        // );
+        // Set a list of the variables to use in the select dropdown.
+        $variables['customStatuses'] = array(
+            ApplicationStatus::Approved => 'approved',
+            ApplicationStatus::Denied => 'denied',
+            ApplicationStatus::Pending => 'pending',
+        );
 
         // Render the template!
         $this->renderTemplate('applications/_edit', $variables);
@@ -144,7 +176,7 @@ class ApplicationsController extends BaseController
     /**
      * Saves an application.
      */
-    public function actionSaveApplication()
+    public function actionSave()
     {
         $this->requirePostRequest();
 
@@ -169,8 +201,8 @@ class ApplicationsController extends BaseController
 
         // Set the application attributes, defaulting to the existing values for whatever is missing from the post data
         $application->formId     = craft()->request->getPost('formId', $application->formId);
-        $application->firstName       = craft()->request->getPost('firstName');
-        $application->lastName       = craft()->request->getPost('lastName');
+        $application->firstName  = craft()->request->getPost('firstName');
+        $application->lastName   = craft()->request->getPost('lastName');
         $application->email      = craft()->request->getPost('email');
         $application->phone      = craft()->request->getPost('phone');
         $application->status     = craft()->request->getPost('status');
@@ -178,7 +210,7 @@ class ApplicationsController extends BaseController
 
         $application->setContentFromPost('fields');
 
-        if (craft()->applications->saveApplication($application))
+        if (craft()->applications->save($application))
         {
             craft()->userSession->setNotice(Craft::t('Application saved.'));
             $this->redirectToPostedUrl($application);
@@ -192,6 +224,36 @@ class ApplicationsController extends BaseController
                 'application' => $application
             ));
         }
+    }
+
+    /**
+     * Changes an application to approved.
+     */
+    public function actionApprove()
+    {
+        $this->requirePostRequest();
+
+        $applicationId = craft()->request->getRequiredPost('applicationId');
+    }
+
+    /**
+     * Changes an application to denied.
+     */
+    public function actionDeny()
+    {
+        $this->requirePostRequest();
+
+        $applicationId = craft()->request->getRequiredPost('applicationId');
+    }
+
+    /**
+     * Changes an application to pending.
+     */
+    public function actionPending()
+    {
+        $this->requirePostRequest();
+
+        $applicationId = craft()->request->getRequiredPost('applicationId');
     }
 
     /**
