@@ -27,8 +27,6 @@ class Applications_NoteRecord extends BaseRecord
      */
     public function defineRelations()
     {
-        // @TODO looks at the proper relationship for notes to
-        // applications
         return array(
             'application' => array(
                 static::BELONGS_TO,
