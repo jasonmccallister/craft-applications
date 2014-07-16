@@ -19,6 +19,27 @@ class ApplicationsService extends BaseApplicationComponent
     }
 
     /**
+     * Returns all notes by application ID
+     *
+     * @param $applicationId
+     * @return Applications_NoteModel|null
+     */
+    public function getNotesByApplicationId($applicationId)
+    {
+        $query = craft()->db->createCommand()
+			->select('*')
+			->from('applications_notes')
+			->where('applicationId=:applicationId', array(
+                ':applicationId'=> $applicationId
+            ))
+			->queryRow();
+
+		$model = Applications_NoteModel::populateModel($query);
+
+        return $model;
+    }
+
+    /**
      * @param Applications_ApplicationModel $application
      * @return bool
      * @throws Exception
