@@ -22,10 +22,12 @@ class Applications_FormRecord extends BaseRecord
     {
         return array(
             'name' => array(
-                AttributeType::Name, 'required' => true
+                AttributeType::Name,
+                'required' => true
             ),
             'handle' => array(
-                AttributeType::Handle, 'required' => true
+                AttributeType::Handle,
+                'required' => true
             ),
             'fieldLayoutId' => AttributeType::Number,
         );
@@ -38,10 +40,14 @@ class Applications_FormRecord extends BaseRecord
     {
         return array(
             'fieldLayout'  => array(
-                static::BELONGS_TO, 'FieldLayoutRecord', 'onDelete' => static::SET_NULL
+                static::BELONGS_TO,
+                'FieldLayoutRecord',
+                'onDelete' => static::SET_NULL
             ),
             'applications' => array(
-                static::HAS_MANY, 'Applications_ApplicationRecord', 'applicationId'
+                static::HAS_MANY,
+                'Applications_ApplicationRecord',
+                'applicationId'
             ),
         );
     }
@@ -55,7 +61,7 @@ class Applications_FormRecord extends BaseRecord
             array(
                 'columns' => array(
                     'name'
-                ), 'unique' => true
+                ),'unique' => true
             ),
             array(
                 'columns' => array(
