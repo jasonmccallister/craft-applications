@@ -2,7 +2,8 @@
 namespace Craft;
 
 /**
- * Forms service
+ * Class Applications_FormsService
+ * @package Craft
  */
 class Applications_FormsService extends BaseApplicationComponent
 {
