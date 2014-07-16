@@ -182,18 +182,24 @@ class ApplicationsController extends BaseController
             )),
             array(
                 'label' => $variables['form']->name,
-                'url' => UrlHelper::getUrl('applications'
-            ))
+                'url' => UrlHelper::getUrl('applications')
+            )
         );
+
+        // Grab all notes related to this application
+        if (!empty($variables['notes']))
+        {
+            $variables['notes'] = craft()->applications->getNotesByApplicationId($variables['applicationId']);
+        }
 
         // Set the "Continue Editing" URL
         $variables['continueEditingUrl'] = 'applications/'.$variables['form']->handle.'/{id}';
 
-        // Set a list of the variables to use in the select dropdown.
+        // Set a list of the enums to use in the status select dropdown
         $variables['customStatuses'] = array(
             ApplicationStatus::Approved => 'approved',
-            ApplicationStatus::Denied => 'denied',
-            ApplicationStatus::Pending => 'pending',
+            ApplicationStatus::Denied   => 'denied',
+            ApplicationStatus::Pending  => 'pending',
         );
 
         // Render the template!
@@ -258,27 +264,23 @@ class ApplicationsController extends BaseController
      */
     public function actionApprove()
     {
-        // @TODO example approve workflow, define the query here later
         $this->requirePostRequest();
 
+        $status  = ApplicationStatus::Approved;
         $applicationId = craft()->request->getRequiredPost('applicationId');
-        $firstName = craft()->request->getRequiredPost('firstName');
-        $lastName = craft()->request->getRequiredPost('lastName');
 
-        if ($applicationId != null) {
-
-            // query table where applicationId equals applicationId
-            // change application.status to ApplicationStatus::Approved
-
-            // notify the user that the application was approved
-            craft()->userSession->setNotice(Craft::t('Application for ' . $firstName . ' ' . $lastName . ' was approved!'));
-
-            // redirect to posted url - based on the form
-            // $this->redirectToPostedUrl();
-
-            // TODO: remove dev testing
-            // var_dump($applicationId);
-            // die('app id was not null');
+        if (craft()->applications->updateStatus($applicationId, $status))
+        {
+            craft()->userSession->setNotice(Craft::t('The application was {status}.', array(
+                'status' => $status
+            )));
+            $this->redirectToPostedUrl();
+        }
+        else
+        {
+            craft()->userSession->setError(Craft::t('Unable to change the application to {status}.', array(
+                'status' => $status
+            )));
         }
     }
 
@@ -289,7 +291,21 @@ class ApplicationsController extends BaseController
     {
         $this->requirePostRequest();
 
+        $status  = ApplicationStatus::Denied;
         $applicationId = craft()->request->getRequiredPost('applicationId');
+
+        if (craft()->applications->updateStatus($applicationId, $status))
+        {
+            craft()->userSession->setNotice(Craft::t('The application was {status}.', array(
+                'status' => $status
+            )));
+        }
+        else
+        {
+            craft()->userSession->setError(Craft::t('Unable to change the application to {status}.', array(
+                'status' => $status
+            )));
+        }
     }
 
     /**
@@ -299,7 +315,21 @@ class ApplicationsController extends BaseController
     {
         $this->requirePostRequest();
 
+        $status  = ApplicationStatus::Pending;
         $applicationId = craft()->request->getRequiredPost('applicationId');
+
+        if (craft()->applications->updateStatus($applicationId, $status))
+        {
+            craft()->userSession->setNotice(Craft::t('The application was {status}.', array(
+                'status' => $status
+            )));
+        }
+        else
+        {
+            craft()->userSession->setError(Craft::t('Unable to change the application to {status}.', array(
+                'status' => $status
+            )));
+        }
     }
 
     /**
