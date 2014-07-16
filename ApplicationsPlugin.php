@@ -1,9 +1,6 @@
 <?php
 namespace Craft;
 
-// include enums for custom statuses
-include(dirname(__FILE__) . '/enums/ApplicationStatus.php');
-
 /**
  * Applications by Jason McCallister
  *
@@ -12,10 +9,16 @@ include(dirname(__FILE__) . '/enums/ApplicationStatus.php');
  * @copyright Copyright (c) 2014, Jason McCallister
  * @link      http://themccallister.com
  */
+
+// include enums for custom statuses
+include(dirname(__FILE__) . '/enums/ApplicationStatus.php');
+
 class ApplicationsPlugin extends BasePlugin
 {
 
     /**
+     * Return the plugin name
+     *
      * @return string
      */
     public function getName()
@@ -32,6 +35,8 @@ class ApplicationsPlugin extends BasePlugin
     }
 
     /**
+     * Return the developer name
+     *
      * @return string
      */
     public function getDeveloper()
@@ -40,6 +45,8 @@ class ApplicationsPlugin extends BasePlugin
     }
 
     /**
+     * Return the developer URL
+     *
      * @return string
      */
     public function getDeveloperUrl()
@@ -48,6 +55,8 @@ class ApplicationsPlugin extends BasePlugin
     }
 
     /**
+     * Tell Craft we have a cp section
+     *
      * @return bool
      */
     public function hasCpSection()
@@ -56,6 +65,8 @@ class ApplicationsPlugin extends BasePlugin
     }
 
     /**
+     * Define the plugin settings
+     *
      * @return array
      */
     protected function defineSettings()
@@ -74,6 +85,8 @@ class ApplicationsPlugin extends BasePlugin
     }
 
     /**
+     * Render the plugin settings HTML template
+     *
      * @return string
      */
     public function getSettingsHtml()
@@ -81,9 +94,11 @@ class ApplicationsPlugin extends BasePlugin
        return craft()->templates->render('applications/_settings', array(
            'settings' => $this->getSettings()
        ));
-   }
+    }
 
     /**
+     * Register CP routes, best practice to route to controllers
+     *
      * @return array
      */
     public function registerCpRoutes()
