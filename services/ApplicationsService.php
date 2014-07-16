@@ -18,6 +18,24 @@ class ApplicationsService extends BaseApplicationComponent
         return craft()->elements->getElementById($applicationId, 'Applications_Application');
     }
 
+    public function updateStatus($applicationId, $status)
+    {
+        $record = Applications_ApplicationRecord::model()->findById($applicationId);
+
+        if ($record)
+        {
+            $record->setAttribute('status', $status);
+
+            return $record->save();
+        }
+        else
+        {
+            throw new Exception(Craft::t('No record was found with id {id}', array(
+                'id' => $applicationId
+            )));
+        }
+    }
+
     /**
      * Returns all notes by application ID
      *
