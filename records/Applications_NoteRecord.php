@@ -30,7 +30,7 @@ class Applications_NoteRecord extends BaseRecord
         // @TODO looks at the proper relationship for notes to
         // applications
         return array(
-            'applications' => array(
+            'application' => array(
                 static::BELONGS_TO,
                 'Applications_ApplicationRecord',
                 'required' => true,
