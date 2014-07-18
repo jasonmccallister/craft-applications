@@ -50,7 +50,7 @@ class Applications_ApplicationModel extends BaseElementModel
                     ),
                     'default' => ApplicationStatus::Pending
                 ),
-                'submitDate'  => AttributeType::DateTime
+                // 'submitDate'  => AttributeType::DateTime
             )
         );
     }
