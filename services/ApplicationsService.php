@@ -169,12 +169,13 @@ class ApplicationsService extends BaseApplicationComponent
 
         $settings = craft()->plugins->getPlugin('applications')->getSettings();
 
-        $email = new EmailModel();
-        $email->toEmail = $settings->notificationEmail;
-        $email->subject = $settings->notificationSubject;
-        $email->body    = $settings->notificationMessage;
+        if (!empty($settings->notificationEmail)) {
+            $email = new EmailModel();
+            $email->toEmail = $settings->notificationEmail;
+            $email->subject = $settings->notificationSubject;
+            $email->body    = $settings->notificationMessage;
 
-        craft()->email->sendEmail($email);
-
+            craft()->email->sendEmail($email);
+        }
     }
 }
