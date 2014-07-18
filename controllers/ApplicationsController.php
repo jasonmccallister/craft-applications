@@ -11,7 +11,7 @@ class ApplicationsController extends BaseController
      * @var Allows anonymous access to this controller's actions.
      * @access protected
      */
-    protected $allowAnonymous = array('actionSave');
+    protected $allowAnonymous = array('actionSubmit');
 
     /**
      * Render the application index
@@ -21,6 +21,25 @@ class ApplicationsController extends BaseController
         $variables['forms'] = craft()->applications_forms->getAllForms();
 
         $this->renderTemplate('applications/_index', $variables);
+    }
+
+    /**
+     * Allow public submission of the application
+     */
+    public function actionSubmit(array $submission = array())
+    {
+        // require post request for this action
+        $this->requirePostRequest();
+
+        // set the form id from the post request
+        $formId = craft()->request->getPost('formId');
+
+        // if form id is empty, throw exception as we can't continue
+        if (!$formId) {
+            throw new Exception(Craft::t('Form ID is required for submission.'));
+        }
+
+        return var_dump($submission);
     }
 
     /**
@@ -299,6 +318,7 @@ class ApplicationsController extends BaseController
             craft()->userSession->setNotice(Craft::t('The application was {status}.', array(
                 'status' => $status
             )));
+            $this->redirectToPostedUrl();
         }
         else
         {
