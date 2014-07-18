@@ -1,8 +1,8 @@
 {% import "_includes/forms" as forms %}
 
-<h2>Plugin Settings</h2>
-
-<p style="margin-bottom: 42px">You must edit these settings to ensure notifications. If you do not setup notifications, you <strong>will not</strong> receive application submission alerts.</p>
+{% if settings.notificationEmail is null %}
+	<p style="margin-bottom: 42px">You must edit these settings to ensure notifications. If you do not setup notifications, you <strong>will not</strong> receive application submission alerts.</p>
+{% endif %}
 
 {{ forms.textField({
 	first:        true,
@@ -13,6 +13,16 @@
 	value:        settings.notificationEmail,
 	autofocus:    true,
 	errors:       settings.getErrors('notificationEmail')
+}) }}
+
+{{ forms.textField({
+	first:        true,
+	label:        "Notification Subject"|t,
+	id:           'notificationSubject',
+	name:         'notificationSubject',
+	instructions: "The email subject line that new application entries will be sent with."|t,
+	value:        settings.notificationSubject,
+	errors:       settings.getErrors('notificationSubject')
 }) }}
 
 {{ forms.textAreaField({
