@@ -251,7 +251,8 @@ class ApplicationsController extends BaseController
             $application = new Applications_ApplicationModel();
         }
 
-        // Set the application attributes, defaulting to the existing values for whatever is missing from the post data
+        // Set the application attributes, defaulting to the existing values for
+        // whatever is missing from the post data
         $application->formId     = craft()->request->getPost('formId', $application->formId);
         $application->firstName  = craft()->request->getPost('firstName');
         $application->lastName   = craft()->request->getPost('lastName');
