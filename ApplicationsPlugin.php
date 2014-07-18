@@ -76,6 +76,11 @@ class ApplicationsPlugin extends BasePlugin
                 AttributeType::Email,
                 'required' => true
             ),
+            'notificationSubject' => array(
+                AttributeType::String,
+                'required' => true,
+                'default' => "You have a new application on your website"
+            ),
             'notificationMessage' => array(
                 AttributeType::String,
                 'required' => true,
