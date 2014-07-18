@@ -31,7 +31,7 @@ class ApplicationsPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0';
+        return '0.9';
     }
 
     /**
