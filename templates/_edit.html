@@ -1,7 +1,8 @@
 {% extends "_layouts/cp" %}
 {% import "_includes/forms" as forms %}
 
-{% set title = 'Application for ' ~ application.firstName ~ ' ' ~ application.lastName %}
+{% set name = application.firstName ~ ' ' ~ application.lastName %}
+{% set title = 'Application for ' ~ name %}
 
 {% set formHandle = form.handle %}
 
