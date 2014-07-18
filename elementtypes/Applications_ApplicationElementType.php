@@ -103,25 +103,25 @@ class Applications_ApplicationElementType extends BaseElementType
             'lastName'   => Craft::t('Last Name'),
             'email'      => Craft::t('Email'),
             'phone'      => Craft::t('Phone'),
-            'submitDate' => Craft::t('Submit Date')
+            'dateCreated' => Craft::t('Submit Date')
         );
     }
 
     /**
-	 * Defines which model attributes should be searchable.
-	 *
-	 * @return array
-	 */
-	public function defineSearchableAttributes()
-	{
-		return array(
+     * Defines which model attributes should be searchable.
+     *
+     * @return array
+     */
+    public function defineSearchableAttributes()
+    {
+        return array(
             'firstName',
             'lastName',
             'email',
             'phone',
-            'submitDate'
+            'dateCreated'
         );
-	}
+    }
 
     /**
      * Returns the table view HTML for a given attribute.
@@ -136,32 +136,32 @@ class Applications_ApplicationElementType extends BaseElementType
         {
 
             case 'email':
-			{
-				$email = $element->email;
-
-				if ($email)
-				{
-					return '<a href="mailto:'.$email.'">'.$email.'</a>';
-				}
-				else
-				{
-					return '';
-				}
-			}
-
-            case 'submitDate':
             {
-                $date = $element->$attribute;
+                $email = $element->email;
 
-                if ($date)
+                if ($email)
                 {
-                    return $date->localeDate();
+                    return '<a href="mailto:'.$email.'">'.$email.'</a>';
                 }
                 else
                 {
                     return '';
                 }
             }
+
+            // case 'dateCreated':
+            // {
+            //     $date = $element->$attribute;
+            //
+            //     if ($date)
+            //     {
+            //         return $date->localeDate();
+            //     }
+            //     else
+            //     {
+            //         return '';
+            //     }
+            // }
 
             default:
             {
@@ -194,25 +194,25 @@ class Applications_ApplicationElementType extends BaseElementType
                 ),
                 'default' => ApplicationStatus::Pending
             ),
-            'submitDate'  => AttributeType::Mixed,
+            // 'dateCreated'  => AttributeType::Mixed,
             'order'       => array(
                 AttributeType::String,
-                'default' => 'applications.submitDate asc'
+                'default' => 'applications.dateCreated asc'
             ),
         );
     }
 
     /**
-	 * Returns the element query condition for a custom status criteria.
-	 *
-	 * @param DbCommand $query
-	 * @param string $status
-	 * @return string|false
-	 */
-	public function getElementQueryStatusCondition(DbCommand $query, $status)
-	{
-		return 'applications.status = "'.$status.'"';
-	}
+     * Returns the element query condition for a custom status criteria.
+     *
+     * @param DbCommand $query
+     * @param string $status
+     * @return string|false
+     */
+    public function getElementQueryStatusCondition(DbCommand $query, $status)
+    {
+        return 'applications.status = "'.$status.'"';
+    }
 
     /**
      * Modifies an element query targeting elements of this type.
@@ -223,11 +223,10 @@ class Applications_ApplicationElementType extends BaseElementType
      */
     public function modifyElementsQuery(DbCommand $query, ElementCriteriaModel $criteria)
     {
-        $query
-            // you must add the columns here when adding a new field
-            ->addSelect('applications.formId, applications.firstName,
+        // you must add the columns here when adding a new field
+        $query->addSelect('applications.formId, applications.firstName,
             applications.lastName, applications.email, applications.status,
-            applications.phone, applications.submitDate,')
+            applications.phone, applications.dateCreated,')
             ->join('applications applications', 'applications.id = elements.id');
 
         if ($criteria->formId)
@@ -241,9 +240,9 @@ class Applications_ApplicationElementType extends BaseElementType
             $query->andWhere(DbHelper::parseParam('applications_forms.handle', $criteria->form, $query->params));
         }
 
-        if ($criteria->submitDate)
+        if ($criteria->dateCreated)
         {
-            $query->andWhere(DbHelper::parseDateParam('entries.submitDate', $criteria->submitDate, $query->params));
+            $query->andWhere(DbHelper::parseDateParam('entries.dateCreated', $criteria->dateCreated, $query->params));
         }
 
     }
