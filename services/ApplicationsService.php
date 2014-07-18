@@ -75,7 +75,10 @@ class ApplicationsService extends BaseApplicationComponent
 
             if (!$applicationRecord)
             {
-                throw new Exception(Craft::t('No application exists with the ID “{id}”', array('id' => $application->id)));
+                throw new Exception(Craft::t('No application exists with the ID “{id}”', array(
+                    'id' => $application->id
+                    )
+                ));
             }
         }
         else
@@ -163,5 +166,15 @@ class ApplicationsService extends BaseApplicationComponent
     public function onSave(Event $event)
     {
         $this->raiseEvent('onSave', $event);
+
+        $settings = craft()->plugins->getPlugin('applications')->getSettings();
+
+        $email = new EmailModel();
+        $email->toEmail = $settings->notificationEmail;
+        $email->subject = $settings->notificationSubject;
+        $email->body    = $settings->notificationMessage;
+
+        craft()->email->sendEmail($email);
+
     }
 }
