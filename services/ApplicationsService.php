@@ -42,20 +42,20 @@ class ApplicationsService extends BaseApplicationComponent
      * @param $applicationId
      * @return Applications_NoteModel|null
      */
-    public function getNotesByApplicationId($applicationId)
-    {
-        $query = craft()->db->createCommand()
-			->select('*')
-			->from('applications_notes')
-			->where('applicationId=:applicationId', array(
-                ':applicationId'=> $applicationId
-            ))
-			->queryRow();
-
-		$model = Applications_NoteModel::populateModel($query);
-
-        return $model;
-    }
+    // public function getNotesByApplicationId($applicationId)
+    // {
+    //     $query = craft()->db->createCommand()
+    //         ->select('*')
+    //         ->from('applications_notes')
+    //         ->where('applicationId=:applicationId', array(
+    //             ':applicationId'=> $applicationId
+    //         ))
+    //         ->queryRow();
+    //
+    //     $model = Applications_NoteModel::populateModel($query);
+    //
+    //     return $model;
+    // }
 
     /**
      * @param Applications_ApplicationModel $application
@@ -91,7 +91,7 @@ class ApplicationsService extends BaseApplicationComponent
         $applicationRecord->lastName   = $application->lastName;
         $applicationRecord->email      = $application->email;
         $applicationRecord->phone      = $application->phone;
-        $applicationRecord->submitDate = $application->submitDate;
+        // $applicationRecord->submitDate = $application->submitDate;
 
         $applicationRecord->validate();
         $application->addErrors($applicationRecord->getErrors());
