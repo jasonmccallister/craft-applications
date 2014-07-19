@@ -1,9 +1,6 @@
 <?php
 namespace Craft;
 
-/**
- * Applications - Application model
- */
 class Applications_ApplicationModel extends BaseElementModel
 {
     protected $elementType = 'Applications_Application';

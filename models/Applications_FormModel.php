@@ -1,9 +1,6 @@
 <?php
 namespace Craft;
 
-/**
- * Applications - Form model
- */
 class Applications_FormModel extends BaseModel
 {
     /**

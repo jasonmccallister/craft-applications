@@ -1,9 +1,6 @@
 <?php
 namespace Craft;
 
-/**
- * Forms controller
- */
 class Applications_FormsController extends BaseController
 {
     /**

@@ -1,10 +1,6 @@
 <?php
 namespace Craft;
 
-/**
- * Class ApplicationsVariable
- * @package Craft
- */
 class ApplicationsVariable
 {
     /**

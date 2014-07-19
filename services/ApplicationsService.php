@@ -1,14 +1,10 @@
 <?php
 namespace Craft;
 
-/**
- * Class ApplicationsService
- * @package Craft
- */
 class ApplicationsService extends BaseApplicationComponent
 {
     /**
-     * Returns an application by its ID.
+     * Returns an application by its ID
      *
      * @param int $applicationId
      * @return Applications_ApplicationModel|null
@@ -18,6 +14,13 @@ class ApplicationsService extends BaseApplicationComponent
         return craft()->elements->getElementById($applicationId, 'Applications_Application');
     }
 
+    /**
+     * Update an applications status
+     *
+     * @param $applicationId
+     * @param $status
+     * @throws Exception
+     */
     public function updateStatus($applicationId, $status)
     {
         $record = Applications_ApplicationRecord::model()->findById($applicationId);
@@ -37,27 +40,8 @@ class ApplicationsService extends BaseApplicationComponent
     }
 
     /**
-     * Returns all notes by application ID
+     * Save an application
      *
-     * @param $applicationId
-     * @return Applications_NoteModel|null
-     */
-    // public function getNotesByApplicationId($applicationId)
-    // {
-    //     $query = craft()->db->createCommand()
-    //         ->select('*')
-    //         ->from('applications_notes')
-    //         ->where('applicationId=:applicationId', array(
-    //             ':applicationId'=> $applicationId
-    //         ))
-    //         ->queryRow();
-    //
-    //     $model = Applications_NoteModel::populateModel($query);
-    //
-    //     return $model;
-    // }
-
-    /**
      * @param Applications_ApplicationModel $application
      * @return bool
      * @throws Exception
@@ -91,7 +75,6 @@ class ApplicationsService extends BaseApplicationComponent
         $applicationRecord->lastName   = $application->lastName;
         $applicationRecord->email      = $application->email;
         $applicationRecord->phone      = $application->phone;
-        // $applicationRecord->submitDate = $application->submitDate;
 
         $applicationRecord->validate();
         $application->addErrors($applicationRecord->getErrors());

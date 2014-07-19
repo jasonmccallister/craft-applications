@@ -1,31 +1,32 @@
 <?php
 namespace Craft;
 
-/**
- * Class ApplicationsController
- * @package Craft
- */
 class ApplicationsController extends BaseController
 {
     /**
      * @var Allows anonymous access to this controller's actions.
      * @access protected
      */
-    protected $allowAnonymous = array('actionSubmit');
+    protected $allowAnonymous = array('actionSave');
 
-    // private $application;
-    // private $plugin;
-    //
-    // public function init()
-    // {
-    //     $this->plugin = craft()->plugins->getPlugin('applications');
-    //
-    //     if (!$this->plugin)
-    //     {
-    //         throw new Exception('Couldn’t find the Applications plugin!');
-    //     }
-    // }
+    /**
+     * @var
+     */
+    private $application;
+    private $plugin;
 
+    /**
+     * @throws Exception
+     */
+    public function init()
+    {
+        $this->plugin = craft()->plugins->getPlugin('applications');
+
+        if (!$this->plugin)
+        {
+            throw new Exception('Couldn’t find the Applications plugin!');
+        }
+    }
 
     /**
      * Render the application index
@@ -36,39 +37,6 @@ class ApplicationsController extends BaseController
 
         $this->renderTemplate('applications/_index', $variables);
     }
-
-    /**
-     * Allow public submission of the application
-     */
-    // public function actionSubmit()
-    // {
-    //     $this->requirePostRequest();
-    //
-    //     $this->application = new Applications_ApplicationModel();
-    //
-    //     // $settings = $this->plugin->getSettings();
-    //
-    //     $this->application->firstName = craft()->request->getPost('firstName');
-    //     $this->application->lastName  = craft()->request->getPost('lastName');
-    //     $this->application->email     = craft()->request->getPost('email');
-    //     $this->application->phone     = craft()->request->getPost('phone');
-    //
-    //     if ($this->application->validate())
-    //     {
-    //         if (craft()->applications->publicSubmission($this->application)) {
-    //             $this->redirectToPostedUrl($this->application);
-    //         }
-    //         else {
-    //
-    //         }
-    //     }
-    //     else
-    //     {
-    //         // $this->charge->addError('general', 'There was a problem with your details, please check the form and try again');
-    //     }
-    //
-    //
-    // }
 
     /**
      * Render a application form
@@ -233,12 +201,6 @@ class ApplicationsController extends BaseController
             )
         );
 
-        // Grab all notes related to this application
-        // if (!empty($variables['notes']))
-        // {
-        //     $variables['notes'] = craft()->applications->getNotesByApplicationId($variables['applicationId']);
-        // }
-
         // Set the "Continue Editing" URL
         $variables['continueEditingUrl'] = 'applications/'.$variables['form']->handle.'/{id}';
 
@@ -287,7 +249,6 @@ class ApplicationsController extends BaseController
         $application->email      = craft()->request->getPost('email');
         $application->phone      = craft()->request->getPost('phone');
         $application->status     = craft()->request->getPost('status');
-        // $application->submitDate = (($submitDate = craft()->request->getPost('submitDate')) ? DateTime::createFromString($submitDate, craft()->timezone) : null);
 
         $application->setContentFromPost('fields');
 
@@ -314,7 +275,7 @@ class ApplicationsController extends BaseController
     {
         $this->requirePostRequest();
 
-        $status  = ApplicationStatus::Approved;
+        $status = ApplicationStatus::Approved;
         $applicationId = craft()->request->getRequiredPost('applicationId');
 
         if (craft()->applications->updateStatus($applicationId, $status))

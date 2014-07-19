@@ -1,9 +1,6 @@
 <?php
 namespace Craft;
 
-/**
- * Applications - Application record
- */
 class Applications_ApplicationRecord extends BaseRecord
 {
     /**
