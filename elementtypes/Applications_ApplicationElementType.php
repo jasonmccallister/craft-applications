@@ -100,7 +100,7 @@ class Applications_ApplicationElementType extends BaseElementType
             'lastName'   => Craft::t('Last Name'),
             'email'      => Craft::t('Email'),
             'phone'      => Craft::t('Phone'),
-            'dateCreated' => Craft::t('Submit Date')
+            'dateCreated' => Craft::t('Date Created')
         );
     }
 
@@ -146,19 +146,21 @@ class Applications_ApplicationElementType extends BaseElementType
                 }
             }
 
-            // case 'dateCreated':
-            // {
-            //     $date = $element->$attribute;
-            //
-            //     if ($date)
-            //     {
-            //         return $date->localeDate();
-            //     }
-            //     else
-            //     {
-            //         return '';
-            //     }
-            // }
+            // @TODO fix this to sort by date created since the date field is
+            // not actually a element attribute.
+            case 'dateCreated':
+            {
+                $date = $element->$attribute;
+
+                if ($date)
+                {
+                    return $date->localeDate();
+                }
+                else
+                {
+                    return '';
+                }
+            }
 
             default:
             {
@@ -191,7 +193,7 @@ class Applications_ApplicationElementType extends BaseElementType
                 ),
                 'default' => ApplicationStatus::Pending
             ),
-            // 'dateCreated'  => AttributeType::Mixed,
+            'dateCreated'  => AttributeType::Mixed,
             'order'       => array(
                 AttributeType::String,
                 'default' => 'applications.dateCreated asc'
