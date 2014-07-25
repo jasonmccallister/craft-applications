@@ -4,12 +4,6 @@ namespace Craft;
 class ApplicationsController extends BaseController
 {
     /**
-     * @var Allows anonymous access to this controller's actions.
-     * @access protected
-     */
-    protected $allowAnonymous = array('actionSave');
-
-    /**
      * @var
      */
     private $application;
@@ -24,7 +18,7 @@ class ApplicationsController extends BaseController
 
         if (!$this->plugin)
         {
-            throw new Exception('Couldn’t find the Applications plugin!');
+            throw new Exception("Couldn't find the Applications plugin!");
         }
     }
 
@@ -109,6 +103,7 @@ class ApplicationsController extends BaseController
             ApplicationStatus::Pending  => 'pending',
         );
 
+        // render all the template!
         $this->renderTemplate('applications/_new', $variables);
     }
 
@@ -120,45 +115,56 @@ class ApplicationsController extends BaseController
      */
     public function actionEdit(array $variables = array())
     {
+        // if formHandle is not empty
         if (!empty($variables['formHandle']))
         {
+            // grab the form by the forms handle
             $variables['form'] = craft()->applications_forms->getFormByHandle($variables['formHandle']);
         }
+        // if formId is not empty
         else if (!empty($variables['formId']))
         {
+            // grab the form by the forms id
             $variables['form'] = craft()->applications_forms->getFormById($variables['formId']);
         }
 
+        // if form is empty
         if (empty($variables['form']))
         {
             throw new HttpException(404);
         }
 
-        // Now let's set up the actual application
+        // setup the application
         if (empty($variables['application']))
         {
+            // if applicationId is NOT empty
             if (!empty($variables['applicationId']))
             {
+                // get the applicaiton by its id
                 $variables['application'] = craft()->applications->getApplicationById($variables['applicationId']);
 
+                // if application is null
                 if (!$variables['application'])
                 {
+                    // throw 404 exception
                     throw new HttpException(404);
                 }
             }
+            // if applicationId is empty
             else
             {
+                // setup a new application
                 $variables['application'] = new Applications_ApplicationModel();
                 $variables['application']->formId = $variables['form']->id;
             }
         }
 
-        // Tabs
+        // tabs
         $variables['tabs'] = array();
 
         foreach ($variables['form']->getFieldLayout()->getTabs() as $index => $tab)
         {
-            // Do any of the fields on this tab have errors?
+            // do any of the fields on this tab have errors?
             $hasErrors = false;
 
             if ($variables['application']->hasErrors())
@@ -189,7 +195,7 @@ class ApplicationsController extends BaseController
             $variables['title'] = $variables['application']->title;
         }
 
-        // Breadcrumbs
+        // breadcrumbs
         $variables['crumbs'] = array(
             array(
                 'label' => Craft::t('Applications'),
@@ -201,17 +207,20 @@ class ApplicationsController extends BaseController
             )
         );
 
-        // Set the "Continue Editing" URL
+        // set the "Continue Editing" URL
         $variables['continueEditingUrl'] = 'applications/'.$variables['form']->handle.'/{id}';
 
-        // Set a list of the enums to use in the status select dropdown
+        // set a list of the enums to use in the status select dropdown
         $variables['customStatuses'] = array(
             ApplicationStatus::Approved => 'approved',
             ApplicationStatus::Denied   => 'denied',
             ApplicationStatus::Pending  => 'pending',
         );
 
-        // Render the template!
+        // render all the css!
+        craft()->templates->includeCssResource('applications/css/applications.css');
+
+        // render the template!
         $this->renderTemplate('applications/_edit', $variables);
     }
 
@@ -220,48 +229,59 @@ class ApplicationsController extends BaseController
      */
     public function actionSave()
     {
+        // require post request
         $this->requirePostRequest();
 
+        // set the applicationId from POST
         $applicationId = craft()->request->getPost('applicationId');
 
+        // if applicationId, assume we are editing and get the application by id
         if ($applicationId)
         {
+            // grab the application by the id
             $application = craft()->applications->getApplicationById($applicationId);
 
+            // if application id does not exist
             if (!$application)
             {
+                // throw new exception that the application does not exist
                 throw new Exception(Craft::t('No application exists with the ID “{id}”', array(
                     'id' => $applicationId
                     )
                 ));
             }
         }
+        // else assume this is a new application
         else
         {
+            // setup a new application
             $application = new Applications_ApplicationModel();
         }
 
-        // Set the application attributes, defaulting to the existing values for
-        // whatever is missing from the post data
+        // set the application attributes from POST
         $application->formId     = craft()->request->getPost('formId', $application->formId);
         $application->firstName  = craft()->request->getPost('firstName');
         $application->lastName   = craft()->request->getPost('lastName');
         $application->email      = craft()->request->getPost('email');
         $application->phone      = craft()->request->getPost('phone');
-        $application->status     = craft()->request->getPost('status');
 
+        // set the content from POST
         $application->setContentFromPost('fields');
 
+        // if we could save the application
         if (craft()->applications->save($application))
         {
+            // notify the user that the application saved
             craft()->userSession->setNotice(Craft::t('Application saved.'));
             $this->redirectToPostedUrl($application);
         }
+        // if we could NOT save the application
         else
         {
+            // notify the user the application did NOT save
             craft()->userSession->setError(Craft::t('Couldn’t save application.'));
 
-            // Send the application back to the template
+            // send the user back to the edit template
             craft()->urlManager->setRouteVariables(array(
                 'application' => $application
             ));

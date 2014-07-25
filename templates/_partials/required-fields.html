@@ -1,4 +1,4 @@
-<div class="left" style="width: 40%;">
+
     {{ forms.textField({
         label: "First Name"|t,
         id: 'firstName',
@@ -11,8 +11,7 @@
         autofocus: true,
         required: true
     }) }}
-</div>
-<div class="right" style="width: 50%">
+
     {{ forms.textField({
         label: "Last Name"|t,
         id: 'lastName',
@@ -23,9 +22,7 @@
         errors: application.getErrors('lastName'),
         required: true
     }) }}
-</div>
-<div class="clear"></div>
-<div class="left" style="width: 40%; margin-top: 21px">
+
     {{ forms.textField({
         label: "Email Address"|t,
         id: 'email',
@@ -36,8 +33,7 @@
         errors: application.getErrors('email'),
         required: true
     }) }}
-</div>
-<div class="right" style="width: 50%; margin-top: 21px">
+
     {{ forms.textField({
         label: "Phone Number"|t,
         id: 'phone',
@@ -48,17 +44,3 @@
         errors: application.getErrors('phone'),
         required: true
     }) }}
-</div>
-{# <div class="clear"></div> #}
-{# <div class="left" style="width: 40%; margin-top: 21px">
-    {{ forms.dateField({
-        label: "Submit Date"|t,
-        id: 'submitDate',
-        name: 'submitDate',
-        instructions: "Submission date of the application",
-        value: application.submitDate,
-        errors: application.getErrors('submitDate'),
-        required: true
-    }) }}
-</div> #}
-<div class="clear"></div>

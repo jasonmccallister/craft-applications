@@ -43,10 +43,6 @@ class Applications_ApplicationRecord extends BaseRecord
                 ),
                 'default' => ApplicationStatus::Pending
             ),
-            // 'submitDate' => array(
-            //     AttributeType::DateTime,
-            //     'required' => true
-            // ),
         );
     }
 
