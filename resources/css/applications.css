@@ -13,3 +13,12 @@
 .status.pending {
 	background-position: 0 -30px;
 }
+
+#application-notes {
+	margin-top: 24px;
+}
+
+#application-notes .note h3 > span {
+	font-style: italic;
+	font-weight: normal;
+}
