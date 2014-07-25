@@ -193,7 +193,8 @@ class Applications_ApplicationElementType extends BaseElementType
                 ),
                 'default' => ApplicationStatus::Pending
             ),
-            'dateCreated'  => AttributeType::Mixed,
+            // @TODO might remove, look into this later
+            // 'dateCreated'  => AttributeType::Mixed,
             'order'       => array(
                 AttributeType::String,
                 'default' => 'applications.dateCreated asc'
