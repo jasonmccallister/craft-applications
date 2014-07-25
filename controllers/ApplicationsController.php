@@ -223,6 +223,9 @@ class ApplicationsController extends BaseController
             ApplicationStatus::Pending  => 'pending',
         );
 
+        // render all the css!
+        craft()->templates->includeCssResource('applications/css/applications.css');
+
         // render the template!
         $this->renderTemplate('applications/_edit', $variables);
     }
