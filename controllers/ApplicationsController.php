@@ -252,6 +252,30 @@ class ApplicationsController extends BaseController
             dd('form doesnt exist');
         }
 
+        // setup a new form model
+        $form = new Applications_FormModel();
+
+        // shared attributes
+        $form->id = $application->formId;
+
+        // set the field layout
+        $fieldLayout = craft()->fields->assembleLayoutFromPost();
+        $fieldLayout->type = ElementType::Asset;
+        $form->setFieldLayout($fieldLayout);
+
+        // set content from post with the fields namespace
+        $application->setContentFromPost('fields');
+
+        // Save it
+        if (craft()->applications->save($application))
+        {
+            $this->redirectToPostedUrl($application);
+        }
+        else
+        {
+            dd('not saved');
+        }
+
     }
 
     /**
