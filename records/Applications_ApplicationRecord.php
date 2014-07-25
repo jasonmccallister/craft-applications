@@ -1,9 +1,6 @@
 <?php
 namespace Craft;
 
-/**
- * Applications - Application record
- */
 class Applications_ApplicationRecord extends BaseRecord
 {
     /**
@@ -21,8 +18,30 @@ class Applications_ApplicationRecord extends BaseRecord
     protected function defineAttributes()
     {
         return array(
-            'submitDate' => array(
-                AttributeType::DateTime, 'required' => true
+            'firstName' => array(
+                AttributeType::String,
+                'required' => true
+            ),
+            'lastName' => array(
+                AttributeType::String,
+                'required' => true
+            ),
+            'email' => array(
+                AttributeType::Email,
+                'required' => true
+            ),
+            'phone' => array(
+                AttributeType::String,
+                'required' => true
+            ),
+            'status' => array(
+                AttributeType::Enum,
+                'values' => array(
+                    ApplicationStatus::Approved,
+                    ApplicationStatus::Denied,
+                    ApplicationStatus::Pending
+                ),
+                'default' => ApplicationStatus::Pending
             ),
         );
     }
@@ -34,10 +53,17 @@ class Applications_ApplicationRecord extends BaseRecord
     {
         return array(
             'element' => array(
-                static::BELONGS_TO, 'ElementRecord', 'id', 'required' => true, 'onDelete' => static::CASCADE
+                static::BELONGS_TO,
+                'ElementRecord',
+                'id',
+                'required' => true,
+                'onDelete' => static::CASCADE
             ),
-            'form'    => array(
-                static::BELONGS_TO, 'Applications_FormRecord', 'required' => true, 'onDelete' => static::CASCADE
+            'form' => array(
+                static::BELONGS_TO,
+                'Applications_FormRecord',
+                'required' => true,
+                'onDelete' => static::CASCADE
             ),
         );
     }

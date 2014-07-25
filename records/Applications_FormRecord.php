@@ -1,9 +1,6 @@
 <?php
 namespace Craft;
 
-/**
- * Applications - Form record
- */
 class Applications_FormRecord extends BaseRecord
 {
     /**
@@ -21,11 +18,13 @@ class Applications_FormRecord extends BaseRecord
     protected function defineAttributes()
     {
         return array(
-            'name'          => array(
-                AttributeType::Name, 'required' => true
+            'name' => array(
+                AttributeType::Name,
+                'required' => true
             ),
-            'handle'        => array(
-                AttributeType::Handle, 'required' => true
+            'handle' => array(
+                AttributeType::Handle,
+                'required' => true
             ),
             'fieldLayoutId' => AttributeType::Number,
         );
@@ -38,10 +37,14 @@ class Applications_FormRecord extends BaseRecord
     {
         return array(
             'fieldLayout'  => array(
-                static::BELONGS_TO, 'FieldLayoutRecord', 'onDelete' => static::SET_NULL
+                static::BELONGS_TO,
+                'FieldLayoutRecord',
+                'onDelete' => static::SET_NULL
             ),
             'applications' => array(
-                static::HAS_MANY, 'Applications_ApplicationRecord', 'applicationId'
+                static::HAS_MANY,
+                'Applications_ApplicationRecord',
+                'applicationId'
             ),
         );
     }
@@ -55,7 +58,7 @@ class Applications_FormRecord extends BaseRecord
             array(
                 'columns' => array(
                     'name'
-                ), 'unique' => true
+                ),'unique' => true
             ),
             array(
                 'columns' => array(

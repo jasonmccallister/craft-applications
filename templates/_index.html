@@ -3,9 +3,17 @@
 {% set elementType = 'Applications_Application' %}
 
 {% set tabs = {
-    applications: { label: "Applications"|t, url: url('applications') },
-    forms: 	   { label: "Forms"|t, url: url('applications/forms') }
+    applications: {
+        label: "Applications"|t,
+        url: url('applications')
+    },
+    forms: {
+        label: "Forms"|t,
+        url: url('applications/forms')
+    }
 } %}
+
+{# {% set docsUrl = 'http://themccallister.com/plugins/applications/docs' %} #}
 
 
 {% block sidebar %}
@@ -45,3 +53,5 @@
 
 
 {% endblock %}
+
+{% includeCssFile('resources/applications/css/applications.css') %}

@@ -1,9 +1,6 @@
 <?php
 namespace Craft;
 
-/**
- * Applications field type
- */
 class ApplicationsFieldType extends BaseElementFieldType
 {
     /**

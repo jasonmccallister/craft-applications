@@ -1,0 +1,105 @@
+{% import "_includes/forms" as forms %}
+
+{% if settings.notificationEmail is null %}
+	<p style="margin-bottom: 42px">You must edit these settings to ensure notifications. If you do not setup notifications, you <strong>will not</strong> receive application submission alerts.</p>
+{% endif %}
+
+{{ forms.textField({
+	first:        true,
+	label:        "Notification Email"|t,
+	id:           'notificationEmail',
+	name:         'notificationEmail',
+	instructions: "The email address that new application entries will be sent too. Separate multiple email addresses with commas."|t,
+	value:        settings.notificationEmail,
+	autofocus:    true,
+	errors:       settings.getErrors('notificationEmail')
+}) }}
+
+{{ forms.textField({
+	first:        true,
+	label:        "Notification Subject"|t,
+	id:           'notificationSubject',
+	name:         'notificationSubject',
+	instructions: "The email subject line that new application entries will be sent with."|t,
+	value:        settings.notificationSubject,
+	errors:       settings.getErrors('notificationSubject')
+}) }}
+
+{{ forms.textAreaField({
+	label:        "Notification Message"|t,
+	id:           'notificationMessage',
+	name:         'notificationMessage',
+	instructions: "The message content that will be sent in the notification email."|t,
+	value:        settings.notificationMessage,
+	rows:         '4',
+	errors:       settings.getErrors('notificationMessage')
+}) }}
+
+<hr>
+
+<h2>Usage Instructions</h2>
+
+<ol>
+	<li>Change the '<strong>redirect</strong>' hidden input to the URL you wish to send successful application submissions to.</li>
+	<li>Change the '<strong>formId</strong>' hidden input '<strong>value</strong>' to the form id number the application will submit too.</li>
+	<ul>
+		<li><i><strong>Note</strong>: the form ID can be found on the specific form page.</i></li>
+	</ul>
+	<li></li>
+	<li>Add your custom fields and away you go!</li>
+</ol>
+
+<hr>
+
+<h3>Form Header</h3>
+
+<pre><code>{% filter escape %}
+<form id="application-form" method="post" action="" accept-charset="UTF-8">
+<input type="hidden" name="action" value="applications/application">
+<input type="hidden" name="redirect" value="uri/to/thanks/page">
+<input type="hidden" name="formId" value="1">
+{% endfilter %}
+</code></pre>
+
+<hr>
+<h3>Required Fields</h3>
+
+<pre><code>{% filter escape %}
+<!-- Required Fields -->
+<label>First Name
+<input type="text" name="firstName" placeholder="John" />
+</label>
+<label>Last Name
+<input type="text" name="lastName" placeholder="Doe" />
+</label>
+
+<label>Email
+<input type="text" name="email" placeholder="JohnDoe@gmail.com" />
+</label>
+<label>Phone Number
+<input type="text" name="phone" placeholder="555-555-555" />
+</label>
+<!-- End Required Fields -->
+{% endfilter %}
+</code></pre>
+
+<hr>
+<h3>Custom Fields</h3>
+
+<pre><code>{% filter escape %}
+<!-- My Custom Fields -->
+<textarea name="myCustomTextAreaField" id="myCustomField" rows="8" cols="40"></textarea>
+
+<input type="text" name="myCustomTextField" value="">
+<!-- End Required Fields -->
+{% endfilter %}
+</code></pre>
+
+<hr>
+<h3>Form Footer</h3>
+
+<pre><code>{% filter escape %}
+<button type="submit">Apply Now</button>
+</form>
+{% endfilter %}
+</code></pre>

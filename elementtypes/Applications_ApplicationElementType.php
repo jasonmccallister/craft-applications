@@ -1,9 +1,6 @@
 <?php
 namespace Craft;
 
-/**
- * Applications - Application element type
- */
 class Applications_ApplicationElementType extends BaseElementType
 {
     /**
@@ -33,7 +30,31 @@ class Applications_ApplicationElementType extends BaseElementType
      */
     public function hasTitles()
     {
+        return false;
+    }
+
+    /**
+     * Returns whether this element type can have statuses.
+     *
+     * @return bool
+     */
+    public function hasStatuses()
+    {
         return true;
+    }
+
+    /**
+     * Returns all of the possible statuses that elements of this type may have.
+     *
+     * @return array|null
+     */
+    public function getStatuses()
+    {
+        return array(
+            ApplicationStatus::Approved => Craft::t('Approved'),
+            ApplicationStatus::Denied   => Craft::t('Denied'),
+            ApplicationStatus::Pending  => Craft::t('Pending'),
+        );
     }
 
     /**
@@ -46,7 +67,7 @@ class Applications_ApplicationElementType extends BaseElementType
     {
         $sources = array(
             '*' => array(
-                'label'    => Craft::t('All applications'),
+                'label' => Craft::t('All Applications'),
             )
         );
 
@@ -74,8 +95,28 @@ class Applications_ApplicationElementType extends BaseElementType
     public function defineTableAttributes($source = null)
     {
         return array(
-            'title'      => Craft::t('Title'),
-            'submitDate' => Craft::t('Submit Date'),
+            'id'         => Craft::t('Application ID'),
+            'firstName'  => Craft::t('First Name'),
+            'lastName'   => Craft::t('Last Name'),
+            'email'      => Craft::t('Email'),
+            'phone'      => Craft::t('Phone'),
+            'dateCreated' => Craft::t('Date Created')
+        );
+    }
+
+    /**
+     * Defines which model attributes should be searchable.
+     *
+     * @return array
+     */
+    public function defineSearchableAttributes()
+    {
+        return array(
+            'firstName',
+            'lastName',
+            'email',
+            'phone',
+            'dateCreated'
         );
     }
 
@@ -90,7 +131,24 @@ class Applications_ApplicationElementType extends BaseElementType
     {
         switch ($attribute)
         {
-            case 'submitDate':
+
+            case 'email':
+            {
+                $email = $element->email;
+
+                if ($email)
+                {
+                    return '<a href="mailto:'.$email.'">'.$email.'</a>';
+                }
+                else
+                {
+                    return '';
+                }
+            }
+
+            // @TODO fix this to sort by date created since the date field is
+            // not actually a element attribute.
+            case 'dateCreated':
             {
                 $date = $element->$attribute;
 
@@ -119,13 +177,41 @@ class Applications_ApplicationElementType extends BaseElementType
     public function defineCriteriaAttributes()
     {
         return array(
-            'form'        => AttributeType::Mixed,
-            'formId'      => AttributeType::Mixed,
-            'submitDate'  => AttributeType::Mixed,
+            'id'         => AttributeType::Mixed,
+            'form'       => AttributeType::Mixed,
+            'formId'     => AttributeType::Mixed,
+            'firstName'  => AttributeType::String,
+            'lastName'   => AttributeType::String,
+            'email'      => AttributeType::Email,
+            'phone'      => AttributeType::String,
+            'status'     => array(
+                AttributeType::Enum,
+                'values' => array(
+                    ApplicationStatus::Approved,
+                    ApplicationStatus::Denied,
+                    ApplicationStatus::Pending
+                ),
+                'default' => ApplicationStatus::Pending
+            ),
+            // @TODO might remove, look into this later
+            // 'dateCreated'  => AttributeType::Mixed,
             'order'       => array(
-                AttributeType::String, 'default' => 'applications.submitDate asc'
+                AttributeType::String,
+                'default' => 'applications.dateCreated asc'
             ),
         );
+    }
+
+    /**
+     * Returns the element query condition for a custom status criteria.
+     *
+     * @param DbCommand $query
+     * @param string $status
+     * @return string|false
+     */
+    public function getElementQueryStatusCondition(DbCommand $query, $status)
+    {
+        return 'applications.status = "'.$status.'"';
     }
 
     /**
@@ -137,8 +223,10 @@ class Applications_ApplicationElementType extends BaseElementType
      */
     public function modifyElementsQuery(DbCommand $query, ElementCriteriaModel $criteria)
     {
-        $query
-            ->addSelect('applications.formId, applications.submitDate')
+        // you must add the columns here when adding a new field
+        $query->addSelect('applications.formId, applications.firstName,
+            applications.lastName, applications.email, applications.status,
+            applications.phone, applications.dateCreated,')
             ->join('applications applications', 'applications.id = elements.id');
 
         if ($criteria->formId)
@@ -152,9 +240,9 @@ class Applications_ApplicationElementType extends BaseElementType
             $query->andWhere(DbHelper::parseParam('applications_forms.handle', $criteria->form, $query->params));
         }
 
-        if ($criteria->submitDate)
+        if ($criteria->dateCreated)
         {
-            $query->andWhere(DbHelper::parseDateParam('entries.submitDate', $criteria->submitDate, $query->params));
+            $query->andWhere(DbHelper::parseDateParam('entries.dateCreated', $criteria->dateCreated, $query->params));
         }
 
     }

@@ -1,12 +1,29 @@
 <?php
 namespace Craft;
 
-/**
- * Applications - Application model
- */
 class Applications_ApplicationModel extends BaseElementModel
 {
     protected $elementType = 'Applications_Application';
+
+    /**
+     * Use the element's applicant name as its string representation.
+     *
+     * @return string
+     */
+    function __toString()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Use the element's custom statuses
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
     /**
      * @access protected
@@ -16,8 +33,21 @@ class Applications_ApplicationModel extends BaseElementModel
     {
         return array_merge(
             parent::defineAttributes(), array(
-                'formId' => AttributeType::Number,
-                'submitDate'  => AttributeType::DateTime,
+                'formId'     => AttributeType::Number,
+                'firstName'  => AttributeType::String,
+                'lastName'   => AttributeType::String,
+                'email'      => AttributeType::Email,
+                'phone'      => AttributeType::String,
+                'status'     => array(
+                    AttributeType::Enum,
+                    'values' => array(
+                        ApplicationStatus::Approved,
+                        ApplicationStatus::Denied,
+                        ApplicationStatus::Pending
+                    ),
+                    'default' => ApplicationStatus::Pending
+                ),
+                // 'submitDate'  => AttributeType::DateTime
             )
         );
     }
@@ -63,9 +93,9 @@ class Applications_ApplicationModel extends BaseElementModel
     }
 
     /**
-     * Returns the applicaiton's form.
+     * Returns the application's form.
      *
-     * @return Applicaitons_FormModel|null
+     * @return Applications_FormModel|null
      */
     public function getForm()
     {
@@ -74,4 +104,5 @@ class Applications_ApplicationModel extends BaseElementModel
             return craft()->applications_forms->getFormById($this->formId);
         }
     }
+
 }

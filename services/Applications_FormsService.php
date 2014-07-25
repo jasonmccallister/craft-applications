@@ -1,9 +1,6 @@
 <?php
 namespace Craft;
 
-/**
- * Forms service
- */
 class Applications_FormsService extends BaseApplicationComponent
 {
     private $_allFormIds;
