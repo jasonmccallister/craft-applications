@@ -313,35 +313,35 @@ class ApplicationsController extends BaseController
         // require post request
         $this->requirePostRequest();
 
-        // grab the form id from POST
-        $formId = craft()->request->getPost('formId');
-
-        // grab the form by the form id
-        $form = craft()->applications_forms->getFormById($formId);
-
-        // dump the form from the form id
-        dd($form);
-
-        if (empty($formId)) {
-            // @TODO change this to show an error
-            die('formId required');
-        }
-
+        // setup a new application
         $application = new Applications_ApplicationModel();
 
-
-        // Set the application attributes, defaulting to the existing values for
-        // whatever is missing from the post data
+        // set specific attributes based on the POST
         $application->formId     = craft()->request->getPost('formId', $application->formId);
         $application->firstName  = craft()->request->getPost('firstName');
         $application->lastName   = craft()->request->getPost('lastName');
         $application->email      = craft()->request->getPost('email');
         $application->phone      = craft()->request->getPost('phone');
-        $application->status     = craft()->request->getPost('status');
 
-        $application->setContentFromPost('fields');
+        // set content from POST
+        $application->setContentFromPost('application');
 
-        // dd($application);
+        // grab the form by the POST form id
+        $form = craft()->applications_forms->getFormById($application->formId);
+
+        // grab the field layout id from the form id
+        $layoutId = $form->fieldLayoutId;
+
+        // return the layout based on the layoutId
+        $layout = craft()->fields->getLayoutById($layoutId);
+
+        // dump
+        dd($layout);
+
+        if (empty($formId)) {
+            // @TODO change this to show an error
+            die('formId required');
+        }
 
         if (craft()->applications->save($application))
         {
