@@ -224,6 +224,36 @@ class ApplicationsController extends BaseController
         $this->renderTemplate('applications/_edit', $variables);
     }
 
+    public function actionSubmit()
+    {
+        // require POST
+        $this->requirePostRequest();
+
+        // assume new element type
+        $application = new Applications_ApplicationModel();
+
+        // assign the attributes specific to the element type
+        $application->formId    = craft()->request->getPost('formId');
+        $application->firstName = craft()->request->getPost('firstName');
+        $application->lastName  = craft()->request->getPost('lastName');
+        $application->email     = craft()->request->getPost('email');
+        $application->phone     = craft()->request->getPost('phone');
+
+        // if form id does NOT exist
+        if (!$application->formId)
+        {
+            // @TODO figure out how to return errors/validation
+            dd('need a form id');
+        }
+        // if form id exists but we can't find it in the system
+        elseif (craft()->applications_forms->getFormById($application->formId) == null)
+        {
+            // @TODO figure out how to return errors/validation
+            dd('form doesnt exist');
+        }
+
+    }
+
     /**
      * Saves an application.
      */
