@@ -213,6 +213,15 @@ class ApplicationsController extends BaseController
             )
         );
 
+        // grab all notes related to this application
+        $variables['notes'] = craft()->applications->getNotesByApplicationId($variables['applicationId']);
+
+        if (empty($variables['notes']))
+        {
+            $variables['notes'] = null;
+        }
+
+
         // set the "Continue Editing" URL
         $variables['continueEditingUrl'] = 'applications/'.$variables['form']->handle.'/{id}';
 
