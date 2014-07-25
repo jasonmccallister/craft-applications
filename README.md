@@ -12,7 +12,6 @@ This plugin was developed by [Jason McCallister][developer] for [Craft][craftcms
 
 - Pending, approved and denied workflow! Native to Craft!
 - Email notifications on new application submissions
-- Add notes to applications to share with your team members
 
 ## Installation
 
