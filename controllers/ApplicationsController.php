@@ -264,8 +264,6 @@ class ApplicationsController extends BaseController
         $application->lastName   = craft()->request->getPost('lastName');
         $application->email      = craft()->request->getPost('email');
         $application->phone      = craft()->request->getPost('phone');
-        // @TODO consider removing this as its no longer used
-        // $application->status     = craft()->request->getPost('status');
 
         // set the content from POST
         $application->setContentFromPost('fields');
