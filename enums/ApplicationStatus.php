@@ -1,5 +1,4 @@
-<?php
-namespace Craft;
+<?php namespace Craft;
 
 class ApplicationStatus
 {

@@ -1,117 +1,109 @@
-<?php
-namespace Craft;
+<?php namespace Craft;
 
-class Applications_FormsController extends BaseController
-{
-    /**
-     * Form index
-     */
-    public function actionIndex()
-    {
-        $variables['forms'] = craft()->applications_forms->getAllForms();
+class Applications_FormsController extends BaseController {
 
-        $this->renderTemplate('applications/forms', $variables);
-    }
+	/**
+	 * Form index
+	 */
+	public function actionIndex()
+	{
+		$variables['forms'] = craft()->applications_forms->getAllForms();
 
-    /**
-     * Edit a form.
-     *
-     * @param array $variables
-     * @throws HttpException
-     * @throws Exception
-     */
-    public function actionEdit(array $variables = array())
-    {
-        $variables['brandNewForm'] = false;
+		$this->renderTemplate('applications/forms', $variables);
+	}
 
-        if (!empty($variables['formId']))
-        {
-            if (empty($variables['form']))
-            {
-                $variables['form'] = craft()->applications_forms->getFormById($variables['formId']);
+	/**
+	 * Edit a form.
+	 *
+	 * @param array $variables
+	 * @throws HttpException
+	 * @throws Exception
+	 */
+	public function actionEdit(array $variables = array())
+	{
+		$variables['brandNewForm'] = false;
 
-                if (!$variables['form'])
-                {
-                    throw new HttpException(404);
-                }
-            }
+		if (!empty($variables['formId'])) {
+			if (empty($variables['form'])) {
+				$variables['form'] = craft()->applications_forms->getFormById($variables['formId']);
 
-            $variables['title'] = $variables['form']->name;
-        }
-        else
-        {
-            if (empty($variables['form']))
-            {
-                $variables['form'] = new Applications_FormModel();
-                $variables['brandNewForm'] = true;
-            }
+				if (!$variables['form']) {
+					throw new HttpException(404);
+				}
+			}
 
-            $variables['title'] = Craft::t('Create a new form');
-        }
+			$variables['title'] = $variables['form']->name;
+		}
+		else {
+			if (empty($variables['form'])) {
+				$variables['form'] = new Applications_FormModel();
+				$variables['brandNewForm'] = true;
+			}
 
-        $variables['crumbs'] = array(
-            array(
-                'label' => Craft::t('Applications'),
-                'url' => UrlHelper::getUrl('applications')
-            ),
-            array(
-                'label' => Craft::t('Forms'),
-                'url' => UrlHelper::getUrl('applications/forms')
-            ),
-        );
+			$variables['title'] = Craft::t('Create a new form');
+		}
 
-        $this->renderTemplate('applications/forms/_edit', $variables);
-    }
+		$variables['crumbs'] = array(
+			array(
+				'label' => Craft::t('Applications'),
+				'url'   => UrlHelper::getUrl('applications')
+			),
+			array(
+				'label' => Craft::t('Forms'),
+				'url'   => UrlHelper::getUrl('applications/forms')
+			),
+		);
 
-    /**
-     * Saves a form
-     */
-    public function actionSaveForm()
-    {
-        $this->requirePostRequest();
+		$this->renderTemplate('applications/forms/_edit', $variables);
+	}
 
-        $form = new Applications_FormModel();
+	/**
+	 * Saves a form
+	 */
+	public function actionSaveForm()
+	{
+		$this->requirePostRequest();
 
-        // Shared attributes
-        $form->id     = craft()->request->getPost('formId');
-        $form->name   = craft()->request->getPost('name');
-        $form->handle = craft()->request->getPost('handle');
+		$form = new Applications_FormModel();
 
-        // Set the field layout
-        $fieldLayout = craft()->fields->assembleLayoutFromPost();
-        $fieldLayout->type = ElementType::Asset;
-        $form->setFieldLayout($fieldLayout);
+		// Shared attributes
+		$form->id = craft()->request->getPost('formId');
+		$form->name = craft()->request->getPost('name');
+		$form->handle = craft()->request->getPost('handle');
 
-        // Save it
-        if (craft()->applications_forms->saveForm($form))
-        {
-            craft()->userSession->setNotice(Craft::t('Form saved.'));
-            $this->redirectToPostedUrl($form);
-        }
-        else
-        {
-            craft()->userSession->setError(Craft::t('Couldn’t save the form.'));
-        }
+		// Set the field layout
+		$fieldLayout = craft()->fields->assembleLayoutFromPost();
+		$fieldLayout->type = ElementType::Asset;
+		$form->setFieldLayout($fieldLayout);
 
-        // Send the form back to the template
-        craft()->urlManager->setRouteVariables(array(
-            'form' => $form
-        ));
-    }
+		// Save it
+		if (craft()->applications_forms->saveForm($form)) {
+			craft()->userSession->setNotice(Craft::t('Form saved.'));
+			$this->redirectToPostedUrl($form);
+		}
+		else {
+			craft()->userSession->setError(Craft::t('Couldn’t save the form.'));
+		}
 
-    /**
-     * Deletes a form.
-     */
-    public function actionDeleteForm()
-    {
-        $this->requirePostRequest();
-        $this->requireAjaxRequest();
+		// Send the form back to the template
+		craft()->urlManager->setRouteVariables(array(
+			'form' => $form
+		));
+	}
 
-        $formId = craft()->request->getRequiredPost('id');
+	/**
+	 * Deletes a form.
+	 */
+	public function actionDeleteForm()
+	{
+		$this->requirePostRequest();
+		$this->requireAjaxRequest();
 
-        craft()->applications_forms->deleteFormById($formId);
-        $this->returnJson(array(
-            'success' => true
-        ));
-    }
+		$formId = craft()->request->getRequiredPost('id');
+
+		craft()->applications_forms->deleteFormById($formId);
+		$this->returnJson(array(
+			'success' => true
+		));
+	}
 }

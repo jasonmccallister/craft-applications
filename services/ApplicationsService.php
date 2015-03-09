@@ -1,164 +1,151 @@
-<?php
-namespace Craft;
+<?php namespace Craft;
 
-class ApplicationsService extends BaseApplicationComponent
-{
-    /**
-     * Returns an application by its ID
-     *
-     * @param int $applicationId
-     * @return Applications_ApplicationModel|null
-     */
-    public function getApplicationById($applicationId)
-    {
-        return craft()->elements->getElementById($applicationId, 'Applications_Application');
-    }
+class ApplicationsService extends BaseApplicationComponent {
 
-    /**
-     * Update an applications status
-     *
-     * @param $applicationId
-     * @param $status
-     * @throws Exception
-     */
-    public function updateStatus($applicationId, $status)
-    {
-        $record = Applications_ApplicationRecord::model()->findById($applicationId);
+	/**
+	 * Returns an application by its ID
+	 *
+	 * @param int $applicationId
+	 * @return Applications_ApplicationModel|null
+	 */
+	public function getApplicationById($applicationId)
+	{
+		return craft()->elements->getElementById($applicationId, 'Applications_Application');
+	}
 
-        if ($record)
-        {
-            $record->setAttribute('status', $status);
+	/**
+	 * Update an applications status
+	 *
+	 * @param $applicationId
+	 * @param $status
+	 * @throws Exception
+	 */
+	public function updateStatus($applicationId, $status)
+	{
+		$record = Applications_ApplicationRecord::model()->findById($applicationId);
 
-            return $record->save();
-        }
-        else
-        {
-            throw new Exception(Craft::t('No record was found with id {id}', array(
-                'id' => $applicationId
-            )));
-        }
-    }
+		if ($record) {
+			$record->setAttribute('status', $status);
 
-    /**
-     * Save an application
-     *
-     * @param Applications_ApplicationModel $application
-     * @return bool
-     * @throws Exception
-     * @throws \CDbException
-     * @throws \Exception
-     */
-    public function save(Applications_ApplicationModel $application)
-    {
-        $isNewApplication = !$application->id;
+			return $record->save();
+		}
+		else {
+			throw new Exception(Craft::t('No record was found with id {id}', array(
+				'id' => $applicationId
+			)));
+		}
+	}
 
-        // Application data
-        if (!$isNewApplication)
-        {
-            $applicationRecord = Applications_ApplicationRecord::model()->findById($application->id);
+	/**
+	 * Save an application
+	 *
+	 * @param Applications_ApplicationModel $application
+	 * @return bool
+	 * @throws Exception
+	 * @throws \CDbException
+	 * @throws \Exception
+	 */
+	public function save(Applications_ApplicationModel $application)
+	{
+		$isNewApplication = !$application->id;
 
-            if (!$applicationRecord)
-            {
-                throw new Exception(Craft::t('No application exists with the ID “{id}”', array(
-                    'id' => $application->id
-                    )
-                ));
-            }
-        }
-        else
-        {
-            $applicationRecord = new Applications_ApplicationRecord();
-        }
+		// Application data
+		if (!$isNewApplication) {
+			$applicationRecord = Applications_ApplicationRecord::model()->findById($application->id);
 
-        $applicationRecord->formId     = $application->formId;
-        $applicationRecord->firstName  = $application->firstName;
-        $applicationRecord->lastName   = $application->lastName;
-        $applicationRecord->email      = $application->email;
-        $applicationRecord->phone      = $application->phone;
+			if (!$applicationRecord) {
+				throw new Exception(Craft::t('No application exists with the ID “{id}”', array(
+						'id' => $application->id
+					)
+				));
+			}
+		}
 
-        $applicationRecord->validate();
-        $application->addErrors($applicationRecord->getErrors());
+		else {
+			$applicationRecord = new Applications_ApplicationRecord();
+		}
 
-        if (!$application->hasErrors())
-        {
-            $transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
-            try
-            {
+		$applicationRecord->formId = $application->formId;
+		$applicationRecord->firstName = $application->firstName;
+		$applicationRecord->lastName = $application->lastName;
+		$applicationRecord->email = $application->email;
+		$applicationRecord->phone = $application->phone;
 
-                // Fire an 'onBeforeSaveApplication' event
-                $this->onBeforeSave(new Event($this, array(
-                    'application'      => $application,
-                    'isNewApplication' => $isNewApplication
-                )));
+		$applicationRecord->validate();
+		$application->addErrors($applicationRecord->getErrors());
 
-                if (craft()->elements->saveElement($application))
-                {
-                    // Now that we have an element ID, save it on the other stuff
-                    if ($isNewApplication)
-                    {
-                        $applicationRecord->id = $application->id;
-                    }
+		if (!$application->hasErrors()) {
+			$transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
+			try {
 
-                    $applicationRecord->save(false);
+				// Fire an 'onBeforeSaveApplication' event
+				$this->onBeforeSave(new Event($this, array(
+					'application'      => $application,
+					'isNewApplication' => $isNewApplication
+				)));
 
-                    // Fire an 'onSaveEvent' event
-                    $this->onSave(new Event($this, array(
-                        'application'      => $application,
-                        'isNewApplication' => $isNewApplication
-                    )));
+				if (craft()->elements->saveElement($application)) {
+					// Now that we have an element ID, save it on the other stuff
+					if ($isNewApplication) {
+						$applicationRecord->id = $application->id;
+					}
 
-                    if ($transaction !== null)
-                    {
-                        $transaction->commit();
-                    }
+					$applicationRecord->save(false);
 
-                    return true;
-                }
-            }
-            catch (\Exception $e)
-            {
-                if ($transaction !== null)
-                {
-                    $transaction->rollback();
-                }
+					// Fire an 'onSaveEvent' event
+					$this->onSave(new Event($this, array(
+						'application'      => $application,
+						'isNewApplication' => $isNewApplication
+					)));
 
-                throw $e;
-            }
-        }
+					if ($transaction !== null) {
+						$transaction->commit();
+					}
 
-        return false;
-    }
+					return true;
+				}
+			} catch (\Exception $e) {
+				if ($transaction !== null) {
+					$transaction->rollback();
+				}
 
-    // Events
+				throw $e;
+			}
+		}
 
-    /**
-     * Fires an 'onBeforeSaveApplication' event.
-     *
-     * @param Event $event
-     */
-    public function onBeforeSave(Event $event)
-    {
-        $this->raiseEvent('onBeforeSave', $event);
-    }
+		return false;
+	}
 
-    /**
-     * Fires an 'onSaveApplication' event.
-     *
-     * @param Event $event
-     */
-    public function onSave(Event $event)
-    {
-        $this->raiseEvent('onSave', $event);
+	// Events
 
-        $settings = craft()->plugins->getPlugin('applications')->getSettings();
+	/**
+	 * Fires an 'onBeforeSaveApplication' event.
+	 *
+	 * @param Event $event
+	 */
+	public function onBeforeSave(Event $event)
+	{
+		$this->raiseEvent('onBeforeSave', $event);
+	}
 
-        if (!empty($settings->notificationEmail)) {
-            $email = new EmailModel();
-            $email->toEmail = $settings->notificationEmail;
-            $email->subject = $settings->notificationSubject;
-            $email->body    = $settings->notificationMessage;
+	/**
+	 * Fires an 'onSaveApplication' event.
+	 *
+	 * @param Event $event
+	 */
+	public function onSave(Event $event)
+	{
+		$this->raiseEvent('onSave', $event);
 
-            craft()->email->sendEmail($email);
-        }
-    }
+		$settings = craft()->plugins->getPlugin('applications')->getSettings();
+
+		if (!empty($settings->notificationEmail)) {
+			$email = new EmailModel();
+			$email->toEmail = $settings->notificationEmail;
+			$email->subject = $settings->notificationSubject;
+			$email->body = $settings->notificationMessage;
+
+			craft()->email->sendEmail($email);
+		}
+	}
 }

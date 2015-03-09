@@ -1,280 +1,251 @@
-<?php
-namespace Craft;
+<?php namespace Craft;
 
-class Applications_FormsService extends BaseApplicationComponent
-{
-    private $_allFormIds;
-    private $_formsById;
-    private $_fetchedAllForms = false;
+class Applications_FormsService extends BaseApplicationComponent {
 
-    /**
-     * Returns all of the form IDs.
-     *
-     * @return array
-     */
-    public function getAllFormIds()
-    {
-        if (!isset($this->_allFormIds))
-        {
-            if ($this->_fetchedAllForms)
-            {
-                $this->_allFormIds = array_keys($this->_formsById);
-            }
-            else
-            {
-                $this->_allFormIds = craft()->db->createCommand()
-                    ->select('id')
-                    ->from('applications_forms')
-                    ->queryColumn();
-            }
-        }
+	/**
+	 * @var
+	 */
+	private $_allFormIds;
+	private $_formsById;
+	private $_fetchedAllForms = false;
 
-        return $this->_allFormIds;
-    }
+	/**
+	 * Returns all of the form IDs.
+	 *
+	 * @return array
+	 */
+	public function getAllFormIds()
+	{
+		if (!isset($this->_allFormIds)) {
+			if ($this->_fetchedAllForms) {
+				$this->_allFormIds = array_keys($this->_formsById);
+			}
+			else {
+				$this->_allFormIds = craft()->db->createCommand()
+					->select('id')
+					->from('applications_forms')
+					->queryColumn();
+			}
+		}
 
-    /**
-     * Returns all forms.
-     *
-     * @param string|null $indexBy
-     * @return array
-     */
-    public function getAllForms($indexBy = null)
-    {
-        if (!$this->_fetchedAllForms)
-        {
-            $formRecords = Applications_FormRecord::model()->ordered()->findAll();
-            $this->_formsById = Applications_FormModel::populateModels($formRecords, 'id');
-            $this->_fetchedAllForms = true;
-        }
+		return $this->_allFormIds;
+	}
 
-        if ($indexBy == 'id')
-        {
-            return $this->_formsById;
-        }
-        else if (!$indexBy)
-        {
-            return array_values(
-                $this->_formsById
-            );
-        }
-        else
-        {
-            $forms = array();
+	/**
+	 * Returns all forms.
+	 *
+	 * @param string|null $indexBy
+	 * @return array
+	 */
+	public function getAllForms($indexBy = null)
+	{
+		if (!$this->_fetchedAllForms) {
+			$formRecords = Applications_FormRecord::model()->ordered()->findAll();
+			$this->_formsById = Applications_FormModel::populateModels($formRecords, 'id');
+			$this->_fetchedAllForms = true;
+		}
 
-            foreach ($this->_formsById as $form)
-            {
-                $forms[$form->$indexBy] = $form;
-            }
+		if ($indexBy == 'id') {
+			return $this->_formsById;
+		}
+		else if (!$indexBy) {
+			return array_values(
+				$this->_formsById
+			);
+		}
+		else {
+			$forms = array();
 
-            return $forms;
-        }
-    }
+			foreach ($this->_formsById as $form) {
+				$forms[$form->$indexBy] = $form;
+			}
 
-    /**
-     * Gets the total number of forms.
-     *
-     * @return int
-     */
-    public function getTotalForms()
-    {
-        return count(
-            $this->getAllFormIds()
-        );
-    }
+			return $forms;
+		}
+	}
 
-    /**
-     * Returns a form by its ID.
-     *
-     * @param $formId
-     * @return Applications_FormModel|null
-     */
-    public function getFormById($formId)
-    {
-        if (!isset($this->_formsById) || !array_key_exists($formId, $this->_formsById))
-        {
-            $formRecord = Applications_FormRecord::model()->findById($formId);
+	/**
+	 * Gets the total number of forms.
+	 *
+	 * @return int
+	 */
+	public function getTotalForms()
+	{
+		return count(
+			$this->getAllFormIds()
+		);
+	}
 
-            if ($formRecord)
-            {
-                $this->_formsById[$formId] = Applications_FormModel::populateModel($formRecord);
-            }
-            else
-            {
-                $this->_formsById[$formId] = null;
-            }
-        }
+	/**
+	 * Returns a form by its ID.
+	 *
+	 * @param $formId
+	 * @return Applications_FormModel|null
+	 */
+	public function getFormById($formId)
+	{
+		if (!isset($this->_formsById) || !array_key_exists($formId, $this->_formsById)) {
+			$formRecord = Applications_FormRecord::model()->findById($formId);
 
-        return $this->_formsById[$formId];
-    }
+			if ($formRecord) {
+				$this->_formsById[$formId] = Applications_FormModel::populateModel($formRecord);
+			}
+			else {
+				$this->_formsById[$formId] = null;
+			}
+		}
 
-    /**
-     * Gets a form by its handle.
-     *
-     * @param string $formHandle
-     * @return Applications_FormModel|null
-     */
-    public function getFormByHandle($formHandle)
-    {
-        $formRecord = Applications_FormRecord::model()->findByAttributes(array(
-            'handle' => $formHandle
-        ));
+		return $this->_formsById[$formId];
+	}
 
-        if ($formRecord)
-        {
-            return Applications_FormModel::populateModel($formRecord);
-        }
-    }
+	/**
+	 * Gets a form by its handle.
+	 *
+	 * @param string $formHandle
+	 * @return Applications_FormModel|null
+	 */
+	public function getFormByHandle($formHandle)
+	{
+		$formRecord = Applications_FormRecord::model()->findByAttributes(array(
+			'handle' => $formHandle
+		));
 
-    /**
-     * Saves a form.
-     *
-     * @param Applications_FormModel $form
-     * @throws \Exception
-     * @return bool
-     */
-    public function saveForm(Applications_FormModel $form)
-    {
-        if ($form->id)
-        {
-            $formRecord = Applications_FormRecord::model()->findById($form->id);
+		if ($formRecord) {
+			return Applications_FormModel::populateModel($formRecord);
+		}
+	}
 
-            if (!$formRecord)
-            {
-                throw new Exception(Craft::t('No form exists with the ID “{id}”', array(
-                    'id' => $form->id
-                )));
-            }
+	/**
+	 * Saves a form.
+	 *
+	 * @param Applications_FormModel $form
+	 * @throws \Exception
+	 * @return bool
+	 */
+	public function saveForm(Applications_FormModel $form)
+	{
+		if ($form->id) {
+			$formRecord = Applications_FormRecord::model()->findById($form->id);
 
-            $oldForm = Applications_FormModel::populateModel($formRecord);
-            $isNewForm = false;
-        }
-        else
-        {
-            $formRecord = new Applications_FormRecord();
-            $isNewForm = true;
-        }
+			if (!$formRecord) {
+				throw new Exception(Craft::t('No form exists with the ID “{id}”', array(
+					'id' => $form->id
+				)));
+			}
 
-        $formRecord->name       = $form->name;
-        $formRecord->handle     = $form->handle;
+			$oldForm = Applications_FormModel::populateModel($formRecord);
+			$isNewForm = false;
+		}
+		else {
+			$formRecord = new Applications_FormRecord();
+			$isNewForm = true;
+		}
 
-        $formRecord->validate();
-        $form->addErrors($formRecord->getErrors());
+		$formRecord->name = $form->name;
+		$formRecord->handle = $form->handle;
 
-        if (!$form->hasErrors())
-        {
-            $transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
-            try
-            {
-                if (!$isNewForm && $oldForm->fieldLayoutId)
-                {
-                    // Drop the old field layout
-                    craft()->fields->deleteLayoutById($oldForm->fieldLayoutId);
-                }
+		$formRecord->validate();
+		$form->addErrors($formRecord->getErrors());
 
-                // Save the new one
-                $fieldLayout = $form->getFieldLayout();
-                craft()->fields->saveLayout($fieldLayout);
+		if (!$form->hasErrors()) {
+			$transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
+			try {
+				if (!$isNewForm && $oldForm->fieldLayoutId) {
+					// Drop the old field layout
+					craft()->fields->deleteLayoutById($oldForm->fieldLayoutId);
+				}
 
-                // Update the form record/model with the new layout ID
-                $form->fieldLayoutId = $fieldLayout->id;
-                $formRecord->fieldLayoutId = $fieldLayout->id;
+				// Save the new one
+				$fieldLayout = $form->getFieldLayout();
+				craft()->fields->saveLayout($fieldLayout);
 
-                // Save it!
-                $formRecord->save(false);
+				// Update the form record/model with the new layout ID
+				$form->fieldLayoutId = $fieldLayout->id;
+				$formRecord->fieldLayoutId = $fieldLayout->id;
 
-                // Now that we have a form ID, save it on the model
-                if (!$form->id)
-                {
-                    $form->id = $formRecord->id;
-                }
+				// Save it!
+				$formRecord->save(false);
 
-                // Might as well update our cache of the form while we have it.
-                $this->_formsById[$form->id] = $form;
+				// Now that we have a form ID, save it on the model
+				if (!$form->id) {
+					$form->id = $formRecord->id;
+				}
 
-                if ($transaction !== null)
-                {
-                    $transaction->commit();
-                }
-            }
-            catch (\Exception $e)
-            {
-                if ($transaction !== null)
-                {
-                    $transaction->rollback();
-                }
+				// Might as well update our cache of the form while we have it.
+				$this->_formsById[$form->id] = $form;
 
-                throw $e;
-            }
+				if ($transaction !== null) {
+					$transaction->commit();
+				}
+			} catch (\Exception $e) {
+				if ($transaction !== null) {
+					$transaction->rollback();
+				}
 
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+				throw $e;
+			}
 
-    /**
-     * Deletes a form by its ID.
-     *
-     * @param int $formId
-     * @throws \Exception
-     * @return bool
-     */
-    public function deleteFormById($formId)
-    {
-        if (!$formId)
-        {
-            return false;
-        }
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
-        $transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
-        try
-        {
-            // Delete the field layout
-            $fieldLayoutId = craft()->db->createCommand()
-                ->select('fieldLayoutId')
-                ->from('applications_forms')
-                ->where(array(
-                    'id' => $formId
-                ))
-                ->queryScalar();
+	/**
+	 * Deletes a form by its ID.
+	 *
+	 * @param int $formId
+	 * @throws \Exception
+	 * @return bool
+	 */
+	public function deleteFormById($formId)
+	{
+		if (!$formId) {
+			return false;
+		}
 
-            if ($fieldLayoutId)
-            {
-                craft()->fields->deleteLayoutById($fieldLayoutId);
-            }
+		$transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
+		try {
+			// Delete the field layout
+			$fieldLayoutId = craft()->db->createCommand()
+				->select('fieldLayoutId')
+				->from('applications_forms')
+				->where(array(
+					'id' => $formId
+				))
+				->queryScalar();
 
-            // Grab the application ids so we can clean the elements table.
-            $applicationIds = craft()->db->createCommand()
-                ->select('id')
-                ->from('applications')
-                ->where(array(
-                    'formId' => $formId
-                ))
-                ->queryColumn();
+			if ($fieldLayoutId) {
+				craft()->fields->deleteLayoutById($fieldLayoutId);
+			}
 
-            craft()->elements->deleteElementById($applicationIds);
+			// Grab the application ids so we can clean the elements table.
+			$applicationIds = craft()->db->createCommand()
+				->select('id')
+				->from('applications')
+				->where(array(
+					'formId' => $formId
+				))
+				->queryColumn();
 
-            $affectedRows = craft()->db->createCommand()->delete('applications_forms', array(
-                'id' => $formId
-            ));
+			craft()->elements->deleteElementById($applicationIds);
 
-            if ($transaction !== null)
-            {
-                $transaction->commit();
-            }
+			$affectedRows = craft()->db->createCommand()->delete('applications_forms', array(
+				'id' => $formId
+			));
 
-            return (bool) $affectedRows;
-        }
-        catch (\Exception $e)
-        {
-            if ($transaction !== null)
-            {
-                $transaction->rollback();
-            }
+			if ($transaction !== null) {
+				$transaction->commit();
+			}
 
-            throw $e;
-        }
-    }
+			return (bool)$affectedRows;
+		} catch (\Exception $e) {
+			if ($transaction !== null) {
+				$transaction->rollback();
+			}
+
+			throw $e;
+		}
+	}
 }
