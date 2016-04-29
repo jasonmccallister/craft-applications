@@ -42,7 +42,7 @@ class ApplicationsPlugin extends BasePlugin
      */
     public function getDeveloperUrl()
     {
-        return 'http://jasonmccallister.co';
+        return 'https://mccallister.io';
     }
 
     /**
@@ -85,8 +85,7 @@ class ApplicationsPlugin extends BasePlugin
      *
      * @return string
      */
-    public function getSettingsHtml()
-    {
+    public function getSettingsHtml() {
         return craft()->templates->render('applications/_settings', array(
             'settings' => $this->getSettings()
         ));
@@ -99,25 +98,25 @@ class ApplicationsPlugin extends BasePlugin
      */
     public function registerCpRoutes()
     {
-        return array(
-            'applications/forms' => array(
+        return [
+            'applications/forms' => [
                 'action' => 'applications/forms/index'
-            ),
-            'applications/forms/new' => array(
+            ],
+            'applications/forms/new' => [
                 'action' => 'applications/forms/edit'
-            ),
-            'applications/forms/(?P<formId>\d+)' => array(
+            ],
+            'applications/forms/(?P<formId>\d+)' => [
                 'action' => 'applications/forms/edit'
-            ),
-            'applications' => array(
+            ],
+            'applications' => [
                 'action' => 'applications/index'
-            ),
-            'applications/(?P<formHandle>{handle})/new' => array(
+            ],
+            'applications/(?P<formHandle>{handle})/new' => [
                 'action' => 'applications/new'
-            ),
-            'applications/(?P<formHandle>{handle})/(?P<applicationId>\d+)' => array(
+            ],
+            'applications/(?P<formHandle>{handle})/(?P<applicationId>\d+)' => [
                 'action' => 'applications/edit'
-            )
-        );
+            ]
+        ];
     }
 }
