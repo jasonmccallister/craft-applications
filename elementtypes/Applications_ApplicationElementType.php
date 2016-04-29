@@ -1,4 +1,5 @@
-<?php namespace Craft;
+<?php
+namespace Craft;
 
 class Applications_ApplicationElementType extends BaseElementType {
 
